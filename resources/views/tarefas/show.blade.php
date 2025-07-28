@@ -21,10 +21,10 @@
                         <h4 class="card-title mb-4 border-bottom pb-1">📋 Detalhes da Tarefa</h4>
 
                         <dl class="row">
+                            <dt class="mb-2">👤 Atribuída: {{ $tarefa->usuario->user->name ?? 'Usuário não encontrado' }}</dt> <br>
                             <dt class="mb-2">📝 Tarefa: {{ $tarefa->task }}</dt>
                             <dt class="mb-2">🧾 Descrição: {{ $tarefa->descricao ?: 'Sem descrição.' }}</dt>
-                            <dt class="mb-2">📅 Data Inicial: {{ \Carbon\Carbon::parse($tarefa->prazo)->format('d/m/Y') }}
-                            </dt>
+                            <dt class="mb-2">📅 Data Inicial: {{ \Carbon\Carbon::parse($tarefa->prazo)->format('d/m/Y') }} </dt>
                             <dt class="mb-3">❌ Data Final:
                                 {{ \Carbon\Carbon::parse($tarefa->prazofinal)->format('d/m/Y') }}</dt>
 

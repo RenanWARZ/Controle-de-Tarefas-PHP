@@ -31,8 +31,8 @@
                                 @foreach ($usuarios as $usuario)
                                     <tr>
                                         <th scope="row">{{ $usuario->id }}</th>
-                                        <td>{{ $usuario->name }}</td>
-                                        <td>{{ $usuario->email }}</td>
+                                        <td>{{ $usuario->user->name }}</td>
+                                        <td>{{ $usuario->user->email }}</td>
                                         <td class="d-flex justify-content-center gap-2">
                                             <a href="{{ route('usuario.show', $usuario->id) }}"
                                                 class="btn btn-outline-primary btn-sm" title="Visualizar">

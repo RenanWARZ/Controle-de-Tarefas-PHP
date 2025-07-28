@@ -34,8 +34,8 @@
                     </div>
 
                     <div class="fs-5">
-                        <p><strong>Nome:</strong> {{ $usuario->name }}</p>
-                        <p><strong>Email:</strong> {{ $usuario->email }}</p>
+                        <p><strong>Nome:</strong> {{ $usuario->user->name }}</p>
+                        <p><strong>Email:</strong> {{ $usuario->user->email }}</p>
                         <p><strong>Setor:</strong> {{ $usuario->setor->nome ?? 'Não atribuído' }}</p>
                         <p><strong>Senha: **************</p></strong>
                     </div>

@@ -13,9 +13,7 @@ class Usuario extends Authenticatable
     protected $table = 'usuarios';
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'id_user',
         'setor_id',
         'foto',
         'tarefa_atribuida'
@@ -36,6 +34,11 @@ public function tarefa()
 public function tarefas()
 {
     return $this->hasMany(Tarefa::class, 'usuario_id');
+}
+
+public function user()
+{
+    return $this->belongsTo(User::class, 'id_user');
 }
 
 

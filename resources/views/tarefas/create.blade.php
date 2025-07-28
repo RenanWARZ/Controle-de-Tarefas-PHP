@@ -62,12 +62,12 @@
                             <option value="" disabled selected>-- Selecione um usuário --</option>
                             @foreach ($usuarios as $u)
                                 <option value="{{ $u->id }}"
-                                    {{ (old('usuario_id') ?? ($usuario->id ?? null)) == $u->id ? 'selected' : '' }}>
-                                    {{ $u->name }}
+                                    {{ (old('usuario_id') ?? ($usuario->user->id ?? null)) == $u->id ? 'selected' : '' }}>
+                                    {{ $u->user->name ?? 'Sem nome' }}
+
                                 </option>
                             @endforeach
                         </select>
-                        <div class="invalid-feedback ps-3">Por favor, selecione um usuário.</div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-3 mt-5">

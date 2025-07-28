@@ -66,7 +66,7 @@ class TarefaController extends Controller
 
     public function create(Usuario $usuario)
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::with('user')->get();
         return view('tarefas.create', compact('usuario', 'usuarios'));
     }
     //===================================================================================================================

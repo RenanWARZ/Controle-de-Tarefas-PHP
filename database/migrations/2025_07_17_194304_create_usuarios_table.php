@@ -13,9 +13,7 @@ return new class extends Migration
     {
     Schema::create('usuarios', function (Blueprint $table) {
     $table->id();
-    $table->string('name');
-    $table->string('email')->unique();
-    $table->string('password');
+    $table->foreignId('id_user')->unique()->constrained('users')->onDelete('cascade');
     $table->string('foto')->nullable();
     $table->foreignId('setor_id')->nullable()->constrained()->onDelete('set null');
     $table->text('tarefa_atribuida')->nullable();

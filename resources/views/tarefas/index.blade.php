@@ -8,7 +8,7 @@
         <div class="card mt-4 mb-4 shadow-sm rounded-4 border-0">
             <div class="card-header bg-primary text-white rounded-top-4 d-flex justify-content-between align-items-center">
                 <h2 class="h4 mb-0">
-                    <i class="bi bi-list-check me-2"></i> Tarefas de {{ $usuario->name }}
+                    <i class="bi bi-list-check me-2"></i> Tarefas de {{ $usuario->user->name }}
                 </h2>
             </div>
             <div class="card-body">
@@ -147,8 +147,9 @@
                                 @else
                                     <span class="badge bg-warning text-dark ms-2">Pendente</span>
                                 @endif
-
                             </h5>
+
+                            <dt class="mb-2">👤 Atribuída a: {{ $tarefa->usuario->user->name ?? 'Usuário não encontrado' }} </dt>
                             <p class="tarefa-descricao" title="{{ $tarefa->descricao }}">{{ $tarefa->descricao }}</p>
                             <small class="text-muted">
                                 <strong>Início:</strong> {{ \Carbon\Carbon::parse($tarefa->prazo)->format('d/m/Y') }} |
