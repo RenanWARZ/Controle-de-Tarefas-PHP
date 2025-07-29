@@ -14,11 +14,10 @@
     @endif
 
     <div class="card mt-4 mb-4 border-light shadow rounded-4">
-        <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white rounded-top-4">
+        <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white rounded-top-4">
             <h2 class="mb-0">Cadastrar Usuário</h2>
-            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn-sm">
-                <i class="bi bi-arrow-left-circle me-1"></i> Voltar
-            </a>
+            <a href="{{ route('welcome') }}" class="btn btn-outline-light btn">
+                <i class="bi bi-arrow-left-circle me-1"></i> Voltar </a>
         </div>
 
         <form action="{{ route('usuario.store') }}" method="POST" class="row g-4 p-4" enctype="multipart/form-data" novalidate>

@@ -7,10 +7,8 @@
                 <h3 class="mb-0 d-flex align-items-center gap-2">
                     <i class="bi bi-person-circle fs-4"></i> Visualizar Tarefas
                 </h3>
-                <a href="{{ route('tarefas.index', ['usuario' => $tarefa->usuario->id ?? 0]) }}"
-                    class="btn btn-light btn-sm shadow-sm" aria-label="Voltar para lista de tarefas">
-                    <i class="bi bi-arrow-left"></i> Voltar para lista
-                </a>
+            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn">
+                <i class="bi bi-arrow-left-circle me-1"></i> Voltar  </a>
             </div>
 
             <div class="card-body">

@@ -13,7 +13,7 @@
 
     <style>
         body {
-            background-image: url("https://img.freepik.com/vetores-gratis/gradient-fluid-background-suitable-for-cover-and-banner-poster_343694-4460.jpg?semt=ais_hybrid&w=740");
+            background-color: black;
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
@@ -113,11 +113,11 @@
         </div>
 
         <button type="submit" class="btn btn-primary w-100 mb-3">
-            <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
-        </button>
-        <a href="{{ route('registrar.create') }}" class="btn btn-secondary w-100">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Entrar </button>
+
+        {{-- <a href="{{ route('registrar.create') }}" class="btn btn-secondary w-100">
             <i class="bi bi-person-plus me-1"></i> Registrar
-        </a>
+        </a> --}}
     </form>
 </body>
 

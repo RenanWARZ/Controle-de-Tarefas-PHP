@@ -1,13 +1,10 @@
 @extends('components.layouts.app')
 
 @section('content')
-    @auth
-        <div class="card mt-4 mb-4 border-light shadow-sm rounded-4">
-            <div class="card-header d-flex align-items-center justify-content-between bg-primary text-white rounded-top-4">
-                <h3 class="mb-0"><i class="bi bi-people-fill me-2"></i>Usuários</h3>
 
-                <a href="{{ route('usuario.create') }}" class="btn btn-outline-light btn shadow-sm">
-                    <i class="bi bi-plus-circle me-1"></i> Cadastrar </a>
+        <div class="card mt-4 mb-4 border-light shadow-sm rounded-4">
+            <div class="card-header d-flex align-items-center justify-content-between bg-dark text-white rounded-top-4">
+                <h3 class="mb-0"><i class="bi bi-people-fill me-2"></i>Usuários</h3>
             </div>
 
             <div class="card-body p-3">
@@ -65,5 +62,4 @@
                 @endif
             </div>
         </div>
-    @endauth
 @endsection

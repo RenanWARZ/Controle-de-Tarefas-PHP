@@ -4,7 +4,7 @@
     <div class="card mt-4 mb-4 border-light shadow rounded-4">
         <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white rounded-top-4">
             <h2 class="mb-0">Editar Usuário</h2>
-            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn-sm">
+            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn">
                 <i class="bi bi-arrow-left-circle me-1"></i> Voltar
             </a>
         </div>

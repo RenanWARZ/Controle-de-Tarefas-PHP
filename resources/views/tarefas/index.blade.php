@@ -10,9 +10,12 @@
                 <h2 class="h4 mb-0">
                     <i class="bi bi-list-check me-2"></i> Tarefas de {{ $usuario->user->name }}
                 </h2>
-            </div>
+
+            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-arrow-left-circle me-5"></i> Voltar </div>
+
             <div class="card-body">
-                @auth
+
                     <div class="text-end mb-4">
                         <a href="{{ route('tarefas.create', ['usuario' => $usuario->id]) }}" class="btn btn-primary shadow-sm"
                             aria-label="Criar nova tarefa para {{ $usuario->name }}">
@@ -20,9 +23,6 @@
                         </a>
                     </div>
                 </div>
-
-
-            @endauth
 
             <div class="card-body mb-4">
                 <form action="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" method="GET" class="mb-4">
@@ -158,7 +158,7 @@
                         </div>
 
                         <div class="d-flex align-items-center gap-3 flex-column flex-sm-row">
-                            @auth
+
                                 <a href="{{ route('tarefas.edit', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
                                     class="btn btn-sm btn-outline-warning" title="Editar"
                                     aria-label="Editar tarefa #{{ $tarefa->id }}">
@@ -181,7 +181,6 @@
                                     aria-label="Exibir detalhes da tarefa #{{ $tarefa->id }}">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                            @endauth
 
                             <form method="POST"
                                 action="{{ route('tarefas.update', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"

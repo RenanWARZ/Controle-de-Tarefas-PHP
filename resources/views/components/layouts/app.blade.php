@@ -9,176 +9,85 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <!-- CSS Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
     <title>@yield('title', 'Sistema de Tarefas')</title>
 
-    <style>
-        /* Fundo geral */
-        body {
-            background-image: url("https://img.freepik.com/vetores-gratis/gradient-fluid-background-suitable-for-cover-and-banner-poster_343694-4460.jpg?semt=ais_hybrid&w=740");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
-        }
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <!-- Botão de abrir o menu -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral"
+                aria-controls="menuLateral" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        /* Header fixo padrão */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: rgb(17, 40, 156);
-            color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            z-index: 1030;
-            padding: 0.75rem 1rem;
-            backdrop-filter: saturate(180%) blur(10px);
-        }
+            <!-- Título no topo -->
+            <a class="navbar-brand fw-bold fs-4" href="{{ route('welcome') }}">Gerenciador de Tarefas</a>
 
-        header .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+            <!-- Offcanvas -->
+            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="menuLateral"
+                aria-labelledby="menuLateralLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title fw-bold text-white" id="menuLateralLabel">
+                        <i class="bi bi-menu-button-wide-fill me-2"></i> Menu Principal
+                    </h5>
 
-        header a.nav-link,
-        header a.text-white,
-        header button.btn-logout {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: white;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Fechar"></button>
+                </div>
 
-        header a.nav-link:hover,
-        header a.text-white:hover,
-        header button.btn-logout:hover {
-            color: #ffdd57;
-        }
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav flex-column gap-2">
 
-        .btn-logout {
-            padding: 0;
-            font-size: 1.1rem;
-        }
+                        <li class="nav-item">
+                            <span class="text-uppercase text-secondary small">Navegação</span>
+                        </li>
 
-        
-        main.container {
-            margin-top: 100px;
-            margin-bottom: 30px;
-            color: #212529;
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-5" href="{{ route('welcome') }}">
+                                <i class="bi bi-house-door-fill me-2"></i> Início </a>
+                        </li>
 
-        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-white fs-5 nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-list-task me-2"></i> Admin </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="{{ route('usuario.create') }}">Cadastrar</a></li>
+                                <li><a class="dropdown-item" href="{{ route('usuario.index') }}"> Ver usuarios </a></li>
+                            </ul>
+                        </li>
 
-        /* Cards padrão para conteúdo */
-        .card {
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
-            background-color: rgba(255 255 255 / 0.9);
-            color: #212529;
-        }
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-5" href="{{ route('usuario.index') }}">
+                                <i class="bi bi-person-lines-fill me-2"></i> Tarefas </a>
+                        </li>
 
-        /* Para botões primários e secundários padrão */
-        .btn-primary {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-        }
+                        <li class="nav-item">
+                            <span class="text-uppercase text-secondary small">Outros</span>
+                        </li>
 
-        .btn-primary:hover {
-            background-color: #0a58ca;
-            border-color: #0a58ca;
-        }
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-5" href="#">
+                                <i class="bi bi-gear-fill me-2"></i> Configurações
+                            </a>
+                            <li class="nav-item">
+                            <form method="POST" class="nav-link text-white fs-5" action="{{ route('logout') }}">
+                                @csrf
+                                 <button class="bi bi-box-arrow-right me-2">Sair</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #565e64;
-            border-color: #565e64;
-        }
-
-        /* Links padrão do menu lateral ou superior */
-        nav a {
-            color: #e9ecef;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: #ffffff;
-        }
-
-        /* Centralizar e organizar ações para visitantes */
-        .guest-actions {
-            margin-top: 90px;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-    </style>
-
-    @stack('styles')
 </head>
 
-<body>
-
-    @auth
-        <header>
-            <div class="container text-center">
-
-                {{-- Botão de Atualizar --}}
-                <button onclick="location.reload();"
-                    class="btn btn-lg text-white text-decoration-none d-flex align-items-center gap-2">
-                    <i class="bi bi-arrow-clockwise"></i> Atualizar
-                </button>
-
-                {{-- Botão home --}}
-                <a href="{{ url('/') }}" class="text-white text-decoration-none d-flex align-items-center gap-2">
-                    <i class="bi bi-list-task fs-3"></i>
-                    <span class="fs-4 fw-bold">Sistema de Tarefas</span>
-                </a>
-
-                {{-- Logout --}}
-                <form method="POST" action="{{ route('logout') }}" class="m-0">
-                    @csrf
-                    <button type="submit" class="btn-logout" title="Sair">
-                        <i class="bi bi-box-arrow-right"></i> Sair </button>
-                </form>
-            </div>
-        </header>
-    @endauth
-
-    @guest
-        <div class="guest-actions">
-            <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4">Entrar</a>
-            <a href="{{ route('registrar.create') }}" class="btn btn-secondary btn-lg px-4">Registrar</a>
-        </div>
-    @endguest
-
-    <main class="container">
+<body style="background: black">
+    <div class="container mt-4 pt-5">
         @yield('content')
-    </main>
-
-    <!-- JS Select2 -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    @stack('scripts')
+        @stack('scripts')
+    </div>
 </body>
 
 </html>

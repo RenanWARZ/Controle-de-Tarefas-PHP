@@ -9,9 +9,15 @@ use App\Models\Setor;
 use App\Models\Tarefa;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
+
+    public function welcome()
+    {
+        return view('welcome');
+    }
     //==========================================================================================================================================================================
     public function index(Tarefa $tarefa)
     {
