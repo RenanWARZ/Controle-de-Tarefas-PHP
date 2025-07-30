@@ -28,7 +28,7 @@ class LoginController extends Controller
             return redirect()->back()->withInput()->withErrors(['Email ou Senha invalida']);
         }
 
-        return to_route('usuario.index');
+        return to_route('welcome');
 }
 
     public function destroy(){

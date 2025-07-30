@@ -21,14 +21,20 @@ class UsuarioController extends Controller
     //==========================================================================================================================================================================
     public function index(Tarefa $tarefa)
     {
-        $usuarios = Usuario::with('user')->get();
+        // Carrega todos os usuários com suas tarefas
 
-        // Se houver uma tarefa específica, filtra os usuários que possuem essa tarefa
+        if(Auth::user()->tipo_user == '1'){
+            $usuarios = Usuario::with('tarefas')->get();
+        }else{
+            $usuarios = Usuario::where('id_user', Auth::user()->id)->with('tarefas')->get();
+        }
+
         if ($tarefa->id) {
             $usuarios = $usuarios->filter(function ($usuario) use ($tarefa) {
                 return $usuario->tarefas->contains($tarefa->id);
             });
         }
+
         return view('usuario.index', ['usuarios' => $usuarios]);
     }
     //==========================================================================================================================================================================

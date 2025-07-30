@@ -6,23 +6,22 @@
 
     <div class="tarefas-header">
         <div class="card mt-4 mb-4 shadow-sm rounded-4 border-0">
-            <div class="card-header bg-primary text-white rounded-top-4 d-flex justify-content-between align-items-center">
+            <div class="card-header bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
                 <h2 class="h4 mb-0">
                     <i class="bi bi-list-check me-2"></i> Tarefas de {{ $usuario->user->name }}
                 </h2>
-
-            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn-sm">
-                <i class="bi bi-arrow-left-circle me-5"></i> Voltar </div>
+            </div>
 
             <div class="card-body">
 
-                    <div class="text-end mb-4">
-                        <a href="{{ route('tarefas.create', ['usuario' => $usuario->id]) }}" class="btn btn-primary shadow-sm"
-                            aria-label="Criar nova tarefa para {{ $usuario->name }}">
-                            <i class="bi bi-plus-lg me-1"></i> Nova Tarefa
-                        </a>
+                @if (Auth::user()->tipo_user)
+                <div class="text-end mb-4">
+                    <a href="{{ route('tarefas.create', ['usuario' => $usuario->id]) }}" class="btn btn-primary shadow-sm"
+                        aria-label="Criar nova tarefa para {{ $usuario->name }}">
+                        <i class="bi bi-plus-lg me-1"></i> Nova Tarefa </a>
                     </div>
-                </div>
+                    @endif
+
 
             <div class="card-body mb-4">
                 <form action="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" method="GET" class="mb-4">
@@ -112,7 +111,7 @@
                         <dd class="col-sm-9">{{ $tarefa->descricao }}</dd>
 
                         <dt class="col-sm-3">Responsável:</dt>
-                        <dd class="col-sm-9">{{ $tarefa->usuario->name ?? 'Não atribuído' }}</dd>
+                        <dd class="col-sm-9">{{ $tarefa->usuario->user->name ?? 'Não atribuído' }}</dd>
 
                         <dt class="col-sm-3">Setor:</dt>
                         <dd class="col-sm-9">{{ $tarefa->usuario->setor->nome ?? 'Não informado' }}</dd>

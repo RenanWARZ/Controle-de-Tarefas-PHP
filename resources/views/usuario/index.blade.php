@@ -35,6 +35,9 @@
                                                 class="btn btn-outline-primary btn-sm" title="Visualizar">
                                                 <i class="bi bi-eye"></i>
                                             </a>
+                                            @if (Auth::user()->tipo_user)
+
+
                                             <a href="{{ route('usuario.edit', $usuario->id) }}"
                                                 class="btn btn-outline-warning btn-sm" title="Editar">
                                                 <i class="bi bi-pencil"></i>
@@ -47,6 +50,7 @@
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
+                                            @endif
                                         </td>
                                         <td>
                                             <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}"

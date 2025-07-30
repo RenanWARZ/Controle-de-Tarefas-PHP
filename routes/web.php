@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\RegistrarController;
 use App\Http\Controllers\TarefaController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
     // ROTAS DE USUÁRIOS
-    Route::get('/', [UsuarioController::class, 'welcome'])->name('welcome');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/', [UsuarioController::class, 'welcome'])->name('welcome');
 
         Route::get('/usuario', [UsuarioController::class, 'index'])->name('usuario.index');
         Route::get('/show/{usuario}', [UsuarioController::class, 'show'])->name('usuario.show');
@@ -28,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
         // ROTA DE LOGOUT
     Route::post('/logout', [RegistrarController::class, 'destroy'])->name('logout');
-
+    });
 //=====================================================================================================================================
 
 // ROTAS DE LOGIN
@@ -40,3 +43,8 @@ Route::get('/registrar', [RegistrarController::class, 'create'])->name('registra
 Route::post('/registrar', [RegistrarController::class, 'store'])->name('registrar.store');
 
 //=====================================================================================================================================
+
+//ROTAS DE NOTIFICAÇÕES
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notificacoes', [NotificacaoController::class, 'index'])->name('notificacoes.index');
+});

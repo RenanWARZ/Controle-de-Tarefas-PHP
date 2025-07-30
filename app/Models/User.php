@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'tipo_user',
     ];
 
     /**
@@ -50,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->is_admin; // Verifica se o usuário é administrador
     }
+    public function tarefas()
+{
+    return $this->hasMany(\App\Models\Tarefa::class);
+}
+
 }

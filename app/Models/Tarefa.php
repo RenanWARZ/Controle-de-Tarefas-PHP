@@ -19,5 +19,4 @@ public function usuarios()
     return $this->belongsToMany(Usuario::class, 'tarefa_usuario', 'tarefa_id', 'usuario_id');
 }
 
-
 }
