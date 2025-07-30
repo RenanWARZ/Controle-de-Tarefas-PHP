@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/edit/{usuario}', [UsuarioController::class, 'edit'])->name('usuario.edit');
         Route::put('/update/{usuario}', [UsuarioController::class, 'update'])->name('usuario.update');
         Route::delete('/destroy/{usuario}', [UsuarioController::class, 'destroy'])->name('usuario.destroy');
+        Route::post('/usuario/notificacao', [UsuarioController::class, 'notificacao'])->name('usuario.notificacao');
 
         // ROTAS DE TAREFAS
         Route::get('/usuario/{usuario}/tarefas', [TarefaController::class, 'index'])->name('tarefas.index');
@@ -43,8 +44,3 @@ Route::get('/registrar', [RegistrarController::class, 'create'])->name('registra
 Route::post('/registrar', [RegistrarController::class, 'store'])->name('registrar.store');
 
 //=====================================================================================================================================
-
-//ROTAS DE NOTIFICAÇÕES
-Route::middleware(['auth'])->group(function () {
-    Route::get('/notificacoes', [NotificacaoController::class, 'index'])->name('notificacoes.index');
-});

@@ -156,24 +156,27 @@
                             </small>
                         </div>
 
+
                         <div class="d-flex align-items-center gap-3 flex-column flex-sm-row">
+                            @if (Auth::user()->tipo_user)
 
-                                <a href="{{ route('tarefas.edit', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
-                                    class="btn btn-sm btn-outline-warning" title="Editar"
-                                    aria-label="Editar tarefa #{{ $tarefa->id }}">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
+                            <a href="{{ route('tarefas.edit', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                                class="btn btn-sm btn-outline-warning" title="Editar"
+                                aria-label="Editar tarefa #{{ $tarefa->id }}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
 
-                                <form method="POST"
-                                    action="{{ route('tarefas.destroy', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
-                                    onsubmit="return confirm('Deseja excluir essa tarefa?')" class="m-0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"
-                                        aria-label="Excluir tarefa #{{ $tarefa->id }}">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                            <form method="POST"
+                            action="{{ route('tarefas.destroy', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                            onsubmit="return confirm('Deseja excluir essa tarefa?')" class="m-0">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"
+                            aria-label="Excluir tarefa #{{ $tarefa->id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                    @endif
 
                                 <a href="{{ route('tarefas.show', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
                                     class="btn btn-sm btn-outline-info" title="Exibir"

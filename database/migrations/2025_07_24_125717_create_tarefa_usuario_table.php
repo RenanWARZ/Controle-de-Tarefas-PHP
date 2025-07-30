@@ -16,10 +16,8 @@ return new class extends Migration
         $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
         $table->foreignId('tarefa_id')->constrained('tarefas')->onDelete('cascade');
         $table->timestamps();
-});
-
-
-    }
+    });
+  }
 
     /**
      * Reverse the migrations.

@@ -6,6 +6,7 @@ use App\Mail\TarefaCriada;
 use App\Models\Setor;
 use App\Models\Tarefa;
 use App\Models\Usuario;
+use App\Services\NotificacaoServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -72,6 +73,8 @@ class TarefaController extends Controller
     //===================================================================================================================
     public function store(Request $request, Usuario $usuario)
     {
+
+
         $request->validate([
             'task' => 'required|string|max:255',
             'descricao' => 'nullable|string',
@@ -87,7 +90,12 @@ class TarefaController extends Controller
             'usuario_id' => $usuario->id,
         ]);
 
-        // // Envia o e-mail
+
+        $notificacao = new NotificacaoServices($usuario->id_user, 'Nova Tarefa Atribuída', 'Você recebeu uma nova tarefa: ' . $tarefa->task);
+
+        $notificacao->cadastrarNotificacao();
+
+        // Envia o e-mail
         // Mail::to($usuario->email)->send(new TarefaCriada($tarefa));
 
         return redirect()->route('tarefas.index', $usuario->id)->with('success', 'Tarefa atribuída e e-mail enviado!');

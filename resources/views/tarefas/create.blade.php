@@ -64,7 +64,6 @@
                                 <option value="{{ $u->id }}"
                                     {{ (old('usuario_id') ?? ($usuario->user->id ?? null)) == $u->id ? 'selected' : '' }}>
                                     {{ $u->user->name ?? 'Sem nome' }}
-
                                 </option>
                             @endforeach
                         </select>

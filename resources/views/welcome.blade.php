@@ -2,7 +2,7 @@
 
 @section('title', 'Bem-vindo')
 
-@section('content') 
+@section('content')
     <div class="text-center text-white">
         <h1 class="display-4 mb-4">Bem-vindo ao Gerenciador de Tarefas</h1>
         <p class="lead mb-5">Organize suas tarefas, atribua responsáveis e acompanhe o progresso de cada setor.</p>
@@ -37,5 +37,6 @@
             </div>
         </div>
     </div>
+
 @endsection
 

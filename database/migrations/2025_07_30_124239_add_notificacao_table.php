@@ -9,11 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('setors', function (Blueprint $table) {
+        Schema::create('notificacoes', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('titulo');
+            $table->text('descricao');
+            $table->boolean('lida')->default(false);
+            $table->foreignId('usuario_id');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('setors');
+           Schema::dropIfExists('notificacoes');
     }
 };

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,6 +8,8 @@
 
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <script src="https://unpkg.com/feather-icons"></script>
+
 
     <title>@yield('title', 'Sistema de Tarefas')</title>
 </head>
@@ -19,10 +22,9 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral"
                 aria-controls="menuLateral" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
+                <a class="ms-2 navbar-brand"> Gerenciador de Tarefas </a>
             </button>
 
-            <!-- Título no topo -->
-            <a class="navbar-brand fw-bold fs-4 ms-3" href="{{ route('welcome') }}"> Gerenciador de Tarefas </a>
 
             <!-- MENU LATERAL -->
             <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="menuLateral"
@@ -34,6 +36,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                         aria-label="Fechar"></button>
                 </div>
+
 
                 <div class="offcanvas-body">
                     <ul class="navbar-nav flex-column gap-2">
@@ -72,6 +75,8 @@
 
                 <div class="nav-item d-flex justify-content-between align-items-center px-3 text-white mb-3">
                     <div>
+
+                        ID: {{ Auth::user()->id }} <br>
                         Usuário: {{ Auth::user()->name }} <br>
                         Email: {{ Auth::user()->email }}
                     </div>
@@ -83,13 +88,29 @@
                     </form>
                 </div>
             </div>
+
+            <!-- Botão para abrir o modal -->
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                data-bs-target="#ExemploModalCentralizado"> <i data-feather="bell"></i>
+ </button>
         </div>
     </nav>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="container mt-4 pt-5">
+
+
         @yield('content')
+       <x-modal-notificacoes :id="Auth::user()->id" />
+
         @stack('scripts')
     </div>
+
+
+<script>
+    feather.replace();
+</script>
+
 </body>
+
 </html>

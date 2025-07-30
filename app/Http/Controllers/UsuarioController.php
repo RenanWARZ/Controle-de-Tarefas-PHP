@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use App\Http\Requests\ValidacaoUsuario;
+use App\Models\Notificacao;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Setor;
 use App\Models\Tarefa;
@@ -23,9 +24,9 @@ class UsuarioController extends Controller
     {
         // Carrega todos os usuários com suas tarefas
 
-        if(Auth::user()->tipo_user == '1'){
+        if (Auth::user()->tipo_user == '1') {
             $usuarios = Usuario::with('tarefas')->get();
-        }else{
+        } else {
             $usuarios = Usuario::where('id_user', Auth::user()->id)->with('tarefas')->get();
         }
 
@@ -49,10 +50,11 @@ class UsuarioController extends Controller
 
     //==========================================================================================================================================================================
     public function store(ValidacaoUsuario $request)
-    { /** @var \Illuminate\Http\Request $request */
+    {
+        /** @var \Illuminate\Http\Request $request */
 
         $dados = $request->validated();
-          // Criptografa a senha
+        // Criptografa a senha
         $dados['password'] = bcrypt($dados['password']);
 
 
@@ -152,5 +154,13 @@ class UsuarioController extends Controller
         if ($cover && Storage::disk('public')->exists($cover)) {
             Storage::disk('public')->delete($cover);
         }
+    }
+
+    public function notificacao()
+    {
+
+        $user = Auth::user();
+        Notificacao::where('usuario_id', $user->id)->update(['lida' => 1]);
+        return redirect()->back()->with('success', 'Notificações marcadas como lidas!');
     }
 }
