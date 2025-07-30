@@ -156,7 +156,6 @@
                             </small>
                         </div>
 
-
                         <div class="d-flex align-items-center gap-3 flex-column flex-sm-row">
                             @if (Auth::user()->tipo_user)
 

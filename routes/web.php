@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\RegistrarController;
 use App\Http\Controllers\TarefaController;
 use App\Http\Controllers\UsuarioController;
@@ -44,3 +43,5 @@ Route::get('/registrar', [RegistrarController::class, 'create'])->name('registra
 Route::post('/registrar', [RegistrarController::class, 'store'])->name('registrar.store');
 
 //=====================================================================================================================================
+// ROTAS SOBRE
+Route::get('/sobre', [UsuarioController::class, 'sobre'])->name('sobre');

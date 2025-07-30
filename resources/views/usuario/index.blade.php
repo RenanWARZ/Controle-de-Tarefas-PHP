@@ -21,7 +21,7 @@
                                     <th>Nome</th>
                                     <th>Email</th>
                                     <th>Ações</th>
-                                    <th>Tarefas</th>
+                                    {{-- <th>Tarefas</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,12 +52,12 @@
                                             </form>
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}"
                                                 class="btn btn-outline-info btn-sm" title="Ver tarefas">
                                                 <i class="bi bi-list-task"></i>
                                             </a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
