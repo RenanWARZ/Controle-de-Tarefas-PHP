@@ -17,7 +17,7 @@ return new class extends Migration
     $table->date('prazo');
     $table->date('prazofinal');
     $table->boolean('concluida')->default(false);
-    $table->foreignId('usuario_id')->nullable()->constrained('usuarios')->onDelete('set null');
+    $table->foreignId('usuario_id')->nullable()->constrained('users')->onDelete('set null');
     $table->timestamps();
 });
 

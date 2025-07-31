@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <div class="card shadow-sm border rounded-4 bg-white text-dark">
             <div class="card-header d-flex justify-content-between align-items-center bg-light rounded-top-4 p-3">
-                <h1 class="h4 fw-bold mb-0">Nova tarefa para {{ $usuario->name }}</h1>
+                <h1 class="h4 fw-bold mb-0">Nova tarefa</h1>
                 <a href="{{ route('usuario.index') }}"
                     class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
                     <i class="bi bi-arrow-left"></i> Voltar
@@ -26,7 +26,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('tarefas.store', ['usuario' => $usuario->id]) }}" method="POST"
+                <form action="{{ route('tarefas.store') }}" method="POST"
                     class="needs-validation" novalidate>
                     @csrf
 
@@ -61,16 +61,16 @@
                         <select class="form-select form-select-lg rounded-3" id="usuario_id" name="usuario_id" required>
                             <option value="" disabled selected>-- Selecione um usuário --</option>
                             @foreach ($usuarios as $u)
-                                <option value="{{ $u->id }}"
-                                    {{ (old('usuario_id') ?? ($usuario->user->id ?? null)) == $u->id ? 'selected' : '' }}>
-                                    {{ $u->user->name ?? 'Sem nome' }}
+                                <option value="{{ $u->id_user }}"
+>
+                                    {{ $u->user->name . ' id : ' . $u->id_user ?? 'Sem nome' }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="d-flex justify-content-end gap-3 mt-5">
-                        <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}"
+                        <a href="{{ route('tarefas.index', ['usuario' => Auth::user()->id ]) }}"
                             class="btn btn-outline-secondary px-4 rounded-3 fw-semibold">
                             Cancelar
                         </a>

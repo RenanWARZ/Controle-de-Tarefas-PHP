@@ -15,7 +15,7 @@
 </head>
 
 <body
-    style="background-image: url('https://img.freepik.com/vetores-gratis/fundo-com-padrao-de-textura-de-fibra-de-carbono-preta_1017-33436.jpg');
+    style="background-image: url('https://4kwallpapers.com/images/wallpapers/macos-monterey-stock-black-dark-mode-layers-5k-3840x2160-5889.jpg');
     background-size: cover;
     background-repeat: no-repeat;">
 
@@ -26,9 +26,8 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral"
                 aria-controls="menuLateral" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-                <a class="ms-2 navbar-brand"> Gerenciador de Tarefas </a>
+                <a class="ms-2 navbar-brand"> Gerenciador de Tarefas  </a>
             </button>
-
 
             <!-- MENU LATERAL -->
             <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="menuLateral"
@@ -56,19 +55,21 @@
                                 <a class="nav-link text-white fs-5 nav-link dropdown-toggle" href="#"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-list-task me-2"></i> Usuario </a>
-
+    
                                   <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" href="{{ route('usuario.create') }}">Cadastrar</a></li>
 
-                                    <li><a class="dropdown-item" href="{{ route('usuario.index') }}">Ver usuarios</a>
-                                    </li>
+                    @if(!Auth::user()->tipo_user)
+                    <li><a class="dropdown-item" href="{{ route('usuario.show', Auth::user()->id) }}">Ver usuario</a></li>
+                         @else
+                    <li><a class="dropdown-item" href="{{ route('usuario.index') }}">Ver usuarios</a></li>            
+                              @endif
                                 </ul>
                             </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-white fs-5" href="{{ route('usuario.index') }}">
-                                <i class="bi bi-person-lines-fill me-2"></i> Tarefas
-                            </a>
+                            <a class="nav-link text-white fs-5" href="{{ route('tarefas.index', Auth::user()->id)}}">
+                                <i class="bi bi-person-lines-fill me-2"></i> Tarefas </a>
                         </li>
 
                         <li class="nav-item">
@@ -82,12 +83,11 @@
                         </li>
                 </div>
 
-                <div class="nav-item text-white px-3 mb-3">
+                <div class="nav-item text-white px-3 mt-3">
                     <div class="mb-2"><i data-feather="award" class="me-1"></i> Id: {{ Auth::user()->id }}</div>
                     <div class="mb-2"><i data-feather="user" class="me-1"></i> Usuário: {{ Auth::user()->name }}
                     </div>
-                    <div class="mb-2"><i data-feather="shield" class="me-1"></i> Tipo:
-                        {{ Auth::user()->tipo_user ? 'Administrador' : 'Usuário' }}</div>
+                    <div class="mb-2"><i data-feather="shield" class="me-1"></i> Tipo: {{ Auth::user()->tipo_user ? 'Administrador' : 'Usuário' }}</div>
                     <div class="mb-2"><i data-feather="mail" class="me-1"></i> Email: {{ Auth::user()->email }}
                     </div>
                 </div>
@@ -101,11 +101,20 @@
                 </form>
             </div>
 
-            <!-- Botão para abrir o modal -->
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                data-bs-target="#ExemploModalCentralizado"> <i data-feather="bell"></i>
-            </button>
-        </div>
+<!-- Botão para abrir o modal -->
+<button type="button" class="btn btn-dark position-relative" data-bs-toggle="modal"
+    data-bs-target="#ExemploModalCentralizado">
+    <i data-feather="bell"></i>
+
+ @if($qtdeNotificacoes)
+    <!-- Badge com número de notificações -->
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ $qtdeNotificacoes ?? 0 }}
+        <span class="visually-hidden">notificações não lidas</span>
+    </span>
+    @endif
+</button>
+
     </nav>
 
     <!-- CONTEÚDO PRINCIPAL -->

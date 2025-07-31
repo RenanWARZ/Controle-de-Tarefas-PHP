@@ -8,23 +8,21 @@
         <div class="card mt-4 mb-4 shadow-sm rounded-4 border-0">
             <div class="card-header bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
                 <h2 class="h4 mb-0">
-                    <i class="bi bi-list-check me-2"></i> Tarefas de {{ $usuario->user->name }}
-                </h2>
+                    <i class="bi bi-list-check me-2"></i> Tarefas </h2>
             </div>
 
             <div class="card-body">
 
                 @if (Auth::user()->tipo_user)
                 <div class="text-end mb-4">
-                    <a href="{{ route('tarefas.create', ['usuario' => $usuario->id]) }}" class="btn btn-primary shadow-sm"
-                        aria-label="Criar nova tarefa para {{ $usuario->name }}">
+                    <a href="{{ route('tarefas.create') }}" class="btn btn-primary shadow-sm"
+                        aria-label="Criar nova tarefa para {{ Auth::user()->name }}">
                         <i class="bi bi-plus-lg me-1"></i> Nova Tarefa </a>
                     </div>
                     @endif
 
-
             <div class="card-body mb-4">
-                <form action="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" method="GET" class="mb-4">
+                <form action="{{ route('tarefas.index', ['usuario' => Auth::user()->id]) }}" method="GET" class="mb-4">
 
                     <div class="row justify-content-center g-3 align-items-end text-start">
 
@@ -86,7 +84,7 @@
                                     <i class="bi bi-search"></i> Filtrar
                                 </button>
 
-                            <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" class="btn btn-primary">
+                            <a href="{{ route('tarefas.index', ['usuario' => Auth::user()->id]) }}" class="btn btn-primary">
                             <i class="bi bi-arrow-clockwise"></i> Atualizar  </a>
 
                             </div>
@@ -139,7 +137,7 @@
                             <h5 class="card-title mb-1">
                                 <span class="badge bg-secondary me-2">#{{ $tarefa->id }}</span>
                                 <a style="text-decoration: none; color:black"
-                                    href="{{ route('tarefas.show', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}">{{ $tarefa->task }}</a>
+                                    href="{{ route('tarefas.show', ['usuario' => Auth::user()->id, 'tarefa' => $tarefa->id]) }}">{{ $tarefa->task }}</a>
 
                                 @if ($tarefa->concluida)
                                     <span class="badge bg-success ms-2">Concluída</span>
@@ -159,14 +157,14 @@
                         <div class="d-flex align-items-center gap-3 flex-column flex-sm-row">
                             @if (Auth::user()->tipo_user)
 
-                            <a href="{{ route('tarefas.edit', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                            <a href="{{ route('tarefas.edit', ['usuario' => Auth::user()->id, 'tarefa' => $tarefa->id]) }}"
                                 class="btn btn-sm btn-outline-warning" title="Editar"
                                 aria-label="Editar tarefa #{{ $tarefa->id }}">
                                 <i class="bi bi-pencil"></i>
                             </a>
 
                             <form method="POST"
-                            action="{{ route('tarefas.destroy', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                            action="{{ route('tarefas.destroy', [ 'tarefa' => $tarefa->id]) }}"
                             onsubmit="return confirm('Deseja excluir essa tarefa?')" class="m-0">
                             @csrf
                             @method('DELETE')
@@ -177,14 +175,14 @@
                     </form>
                     @endif
 
-                                <a href="{{ route('tarefas.show', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                                <a href="{{ route('tarefas.show', ['tarefa' => $tarefa->id]) }}"
                                     class="btn btn-sm btn-outline-info" title="Exibir"
                                     aria-label="Exibir detalhes da tarefa #{{ $tarefa->id }}">
                                     <i class="bi bi-eye"></i>
                                 </a>
 
                             <form method="POST"
-                                action="{{ route('tarefas.update', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                                action="{{ route('tarefas.update', ['usuario' => Auth::user()->id, 'tarefa' => $tarefa->id]) }}"
                                 class="m-0 d-flex align-items-center">
                                 @csrf
                                 @method('PATCH')

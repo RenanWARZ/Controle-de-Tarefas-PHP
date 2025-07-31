@@ -12,8 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
-class UsuarioController extends Controller
-{
+class UsuarioController extends Controller{
 
     public function welcome()
     {
@@ -88,8 +87,7 @@ class UsuarioController extends Controller
 
     public function show(Usuario $usuario)
     {
-        $usuario->load('tarefas', 'setor');
-
+        $usuario->load('tarefas', 'setor','user');
         return view('usuario.show', compact('usuario'));
     }
 
@@ -153,19 +151,25 @@ class UsuarioController extends Controller
         return redirect()->route('usuario.index')->with('success', 'Usuário apagado com sucesso!');
     }
 
-    //==========================================================================================================================================================================
+//==========================================================================================================================================================================
     public function destroyImg($cover)
     {
         if ($cover && Storage::disk('public')->exists($cover)) {
             Storage::disk('public')->delete($cover);
         }
     }
-
+//===============================================================================================================================================================================
     public function notificacao()
     {
-
         $user = Auth::user();
         Notificacao::where('usuario_id', $user->id)->update(['lida' => 1]);
         return redirect()->back()->with('success', 'Notificações marcadas como lidas!');
     }
-}
+//==========================================================================================================================================================================
+public function excluirNotificacao()
+{
+    Notificacao::where('usuario_id', Auth::id())->delete();
+
+    return redirect()->route('usuario.index')->with('success', 'Notificações apagadas com sucesso!');
+        }
+    }

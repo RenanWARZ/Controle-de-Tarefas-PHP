@@ -11,6 +11,7 @@ class Usuario extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'usuarios';
+    protected $primaryKey = 'id_user';
 
     protected $fillable = [
         'id_user',
@@ -32,7 +33,7 @@ public function tarefa()
 }
 
 public function tarefas()
-{
+{ 
     return $this->hasMany(Tarefa::class, 'usuario_id');
 }
 
