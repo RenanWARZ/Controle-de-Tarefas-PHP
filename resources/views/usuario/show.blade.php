@@ -6,7 +6,7 @@
             <h2 class="mb-0">Detalhes do {{ $usuario->user->name }}</h2>
             <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn"><i class="bi bi-arrow-left-circle me-1"></i> Voltar </a>
         </div>
-        
+
         <div class="card-body">
             @if (Auth::user()->tipo_user)
             <form method="POST" action="{{ route('usuario.destroy', $usuario->id) }}" class="position-absolute top-1 end-0 me-3"
@@ -39,8 +39,8 @@
                         <p><strong>Nome:</strong> {{ $usuario->user->name }}</p>
                         <p><strong>Email:</strong> {{ $usuario->user->email }}</p>
                         <p><strong>Setor:</strong> {{ $usuario->setor->nome ?? 'Não atribuído' }}</p>
-                        <p><strong>Perimissão:</strong> {{ Auth::user()->tipo_user ? 'Administrador' : 'Usuário' }}</p>
-                        <p><strong>Senha: **************</p></strong>
+                        <p><strong>Papel:</strong> {{ $tipo_user['descricao']}} </p>
+                        <p><strong>Senha: ************* </p></strong>
                     </div>
                 </div>
 

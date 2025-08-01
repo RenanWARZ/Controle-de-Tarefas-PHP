@@ -8,6 +8,7 @@ use App\Models\Notificacao;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Setor;
 use App\Models\Tarefa;
+use App\Models\tipoUser;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -88,7 +89,8 @@ class UsuarioController extends Controller{
     public function show(Usuario $usuario)
     {
         $usuario->load('tarefas', 'setor','user');
-        return view('usuario.show', compact('usuario'));
+        $tipo_user = tipoUser::where('id', $usuario->user->tipo_user)->first('descricao'); //pluck pega somente um campo específico
+        return view('usuario.show', compact('usuario','tipo_user'));
     }
 
     //==========================================================================================================================================================================
@@ -105,6 +107,9 @@ class UsuarioController extends Controller{
     public function update(ValidacaoUsuario $request, Usuario $usuario)
     {
         /** @var \Illuminate\Http\Request $request */
+
+        // dd($usuario);
+        try {
 
         $dados = $request->validated();
 
@@ -129,23 +134,28 @@ class UsuarioController extends Controller{
             $dados['foto'] = $caminho;
         }
 
-        // Atualiza o usuário
-        $usuario->update($dados);
+        // Update User
+        User::whereId($usuario->id_user)->update([
+            'name' => $dados['name'],
+            'email' => $dados['email'],
+            'password' => $dados['password'] ?? $usuario->user->password, // Mantém a senha antiga se não for atualizada
+        ]);
 
-        // Atualiza tarefas
-        if ($request->filled('tarefas')) {
-            $usuario->tarefa()->sync($request->tarefas);
-        } else {
-            $usuario->tarefa()->sync([]);
-        }
+        Usuario::where('id_user',$usuario->id_user)->update([
+            'foto' => $dados['foto'],
+        ]);
 
         return redirect()->route('usuario.index')->with('success', 'Usuário editado com sucesso!');
+                  //code...
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     //==========================================================================================================================================================================
     public function destroy(Usuario $usuario)
     {
-        $this->destroyImg($usuario->foto); // Remove imagem, se existir
+        $this->destroyImg($usuario->user->foto); // Remove imagem, se existir
         $usuario->delete();
 
         return redirect()->route('usuario.index')->with('success', 'Usuário apagado com sucesso!');
@@ -170,6 +180,6 @@ public function excluirNotificacao()
 {
     Notificacao::where('usuario_id', Auth::id())->delete();
 
-    return redirect()->route('usuario.index')->with('success', 'Notificações apagadas com sucesso!');
+    return redirect()->back()->with('success', 'Notificações apagadas com sucesso!');
         }
     }

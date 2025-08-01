@@ -20,7 +20,7 @@ class ValidacaoUsuario extends FormRequest
      */
 
     //Função para validar o campos
-public function rules(): array
+    public function rules(): array
     {
         $usuarioId = $this->route('usuario')?->id ?? null;
 
