@@ -10,7 +10,7 @@
         <div class="card-body" style="background-color: rgb(188, 188, 188)">
             <x-alertas />
 
-            <form action="{{ route('tarefas.update', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}" method="POST" class="needs-validation" novalidate>
+            <form action="{{ route('tarefas.update', ['tarefa' => $tarefa->id]) }}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 @method('PATCH')
 
@@ -75,7 +75,7 @@
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary px-4">Salvar Alterações</button>
-                    <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" class="btn btn-outline-secondary px-4">Cancelar</a>
+                    <a href="{{ route('tarefas.index', ['usuario' => isset($usuario->id) ? $usuario->id : 0]) }}" class="btn btn-outline-secondary px-4">Cancelar</a>
                 </div>
             </form>
         </div>

@@ -4,10 +4,9 @@
     <div class="card mt-4 mb-4 shadow border-light rounded-4">
         <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white rounded-top-4">
             <h2 class="mb-0">Detalhes do {{ $usuario->user->name }}</h2>
-            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn">
-                <i class="bi bi-arrow-left-circle me-1"></i> Voltar
-            </a>
+            <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn"><i class="bi bi-arrow-left-circle me-1"></i> Voltar </a>
         </div>
+
         <div class="card-body">
             @if (Auth::user()->tipo_user)
             <form method="POST" action="{{ route('usuario.destroy', $usuario->id) }}" class="position-absolute top-1 end-0 me-3"
@@ -20,7 +19,7 @@
             </form>
             @endif
 
-            <span class="badge bg-secondary me-2 mt-3 fs-5"> # {{ $usuario->id }} </span>
+            <span class="badge bg-secondary me-2 mt-3 fs-5"> # {{ $usuario->user->id }} </span>
 
             <div class="row gy-4">
                 <div class="col-md-6 d-flex align-items-center gap-4">
@@ -40,7 +39,8 @@
                         <p><strong>Nome:</strong> {{ $usuario->user->name }}</p>
                         <p><strong>Email:</strong> {{ $usuario->user->email }}</p>
                         <p><strong>Setor:</strong> {{ $usuario->setor->nome ?? 'Não atribuído' }}</p>
-                        <p><strong>Senha: **************</p></strong>
+                        <p><strong>Papel:</strong> {{ $tipo_user['descricao']}} </p>
+                        <p><strong>Senha: ************* </p></strong>
                     </div>
                 </div>
 

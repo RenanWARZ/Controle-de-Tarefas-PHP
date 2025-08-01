@@ -8,6 +8,7 @@ use App\Models\Notificacao;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Setor;
 use App\Models\Tarefa;
+use App\Models\tipoUser;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +20,12 @@ class UsuarioController extends Controller
     {
         return view('welcome');
     }
-//==========================================================================================================================================================================
-   public function sobre()
+    //==========================================================================================================================================================================
+    public function sobre()
     {
         return view('sobre');
     }
-//==========================================================================================================================================================================
+    //==========================================================================================================================================================================
     public function index(Tarefa $tarefa)
     {
         // Carrega todos os usuários com suas tarefas
@@ -49,8 +50,9 @@ class UsuarioController extends Controller
     {
         $setores = Setor::all();
         $tarefas = Tarefa::all();
+        $papeis = tipoUser::all();
 
-        return view('usuario.create', compact('setores', 'tarefas'));
+        return view('usuario.create', compact('setores', 'tarefas', 'papeis'));
     }
 
     //==========================================================================================================================================================================
@@ -61,7 +63,6 @@ class UsuarioController extends Controller
         $dados = $request->validated();
         // Criptografa a senha
         $dados['password'] = bcrypt($dados['password']);
-
 
         $users = Arr::only($dados, ['name', 'email', 'password']);
 
@@ -88,9 +89,9 @@ class UsuarioController extends Controller
 
     public function show(Usuario $usuario)
     {
-        $usuario->load('tarefas', 'setor');
-
-        return view('usuario.show', compact('usuario'));
+        $usuario->load('tarefas', 'setor', 'user');
+        $tipo_user = tipoUser::where('id', $usuario->user->tipo_user)->first('descricao'); //pluck pega somente um campo específico
+        return view('usuario.show', compact('usuario', 'tipo_user'));
     }
 
     //==========================================================================================================================================================================
@@ -100,7 +101,9 @@ class UsuarioController extends Controller
 
         $setores = Setor::all();
         $tarefas = Tarefa::all();
-        return view('usuario.edit', compact('usuario', 'setores', 'tarefas'));
+        $papeis = tipoUser::all();
+
+        return view('usuario.edit', compact('usuario', 'setores', 'tarefas', 'papeis'));
     }
     //==========================================================================================================================================================================
 
@@ -108,46 +111,58 @@ class UsuarioController extends Controller
     {
         /** @var \Illuminate\Http\Request $request */
 
-        $dados = $request->validated();
+        try {
 
-        // Se enviou uma nova senha, criptografa
-        if (!empty($dados['password'])) {
-            $dados['password'] = bcrypt($dados['password']);
-        } else {
-            unset($dados['password']); // evita sobrescrever com vazio
-        }
+            $dados = $request->validated();
 
-        // Atualiza imagem, se enviada
-        if ($request->hasFile('imagem')) {
-            $imagem = $request->file('imagem');
-            $nomeImagem = uniqid() . '.' . $imagem->getClientOriginalExtension();
-            $caminho = $imagem->storeAs('usuarios', $nomeImagem, 'public');
-
-            // Remove imagem antiga
-            if ($usuario->foto && Storage::disk('public')->exists($usuario->foto)) {
-                Storage::disk('public')->delete($usuario->foto);
+            // Se enviou uma nova senha, criptografa
+            if (!empty($dados['password'])) {
+                $dados['password'] = bcrypt($dados['password']);
+            } else {
+                unset($dados['password']); // evita sobrescrever com vazio
             }
 
-            $dados['foto'] = $caminho;
+            // Atualiza imagem, se enviada
+            if ($request->hasFile('imagem')) {
+                $imagem = $request->file('imagem');
+                $nomeImagem = uniqid() . '.' . $imagem->getClientOriginalExtension();
+                $caminho = $imagem->storeAs('usuarios', $nomeImagem, 'public');
+
+                // Remove imagem antiga
+                if ($usuario->foto && Storage::disk('public')->exists($usuario->foto)) {
+                    Storage::disk('public')->delete($usuario->foto);
+                }
+
+                $dados['foto'] = $caminho;
+            }
+
+            // Update User
+            User::whereId($usuario->id_user)->update([
+                'name' => $dados['name'],
+                'email' => $dados['email'],
+                'password' => $dados['password'] ?? $usuario->user->password, // Mantém a senha antiga se não for atualizada
+                'tipo_user' => $dados['papel'],
+
+            ]);
+
+            if (isset($dados['foto'])) {
+                Usuario::where('id_user', $usuario->id_user)->update([
+                    'foto' => $dados['foto'],
+                ]);
+            }
+
+
+            return redirect()->route('usuario.index')->with('success', 'Usuário editado com sucesso!');
+            //code...
+        } catch (\Throwable $th) {
+            dd($th);
         }
-
-        // Atualiza o usuário
-        $usuario->update($dados);
-
-        // Atualiza tarefas
-        if ($request->filled('tarefas')) {
-            $usuario->tarefa()->sync($request->tarefas);
-        } else {
-            $usuario->tarefa()->sync([]);
-        }
-
-        return redirect()->route('usuario.index')->with('success', 'Usuário editado com sucesso!');
     }
 
     //==========================================================================================================================================================================
     public function destroy(Usuario $usuario)
     {
-        $this->destroyImg($usuario->foto); // Remove imagem, se existir
+        $this->destroyImg($usuario->user->foto); // Remove imagem, se existir
         $usuario->delete();
 
         return redirect()->route('usuario.index')->with('success', 'Usuário apagado com sucesso!');
@@ -160,12 +175,18 @@ class UsuarioController extends Controller
             Storage::disk('public')->delete($cover);
         }
     }
-
+    //===============================================================================================================================================================================
     public function notificacao()
     {
-
         $user = Auth::user();
         Notificacao::where('usuario_id', $user->id)->update(['lida' => 1]);
         return redirect()->back()->with('success', 'Notificações marcadas como lidas!');
+    }
+    //==========================================================================================================================================================================
+    public function excluirNotificacao()
+    {
+        Notificacao::where('usuario_id', Auth::id())->delete();
+
+        return redirect()->back()->with('success', 'Notificações apagadas com sucesso!');
     }
 }

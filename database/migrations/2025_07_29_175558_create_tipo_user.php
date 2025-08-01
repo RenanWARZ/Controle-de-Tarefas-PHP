@@ -20,7 +20,7 @@ return new class extends Migration
         });
 
         DB::table('tipo_user')->insert([
-          ['id'=> 0,'descricao' => 'Usuário Comum'],
+          ['id'=> 0,'descricao' => 'Usuário'],
           ['id'=> 1,'descricao' => 'Administrador'],
 
         ]);

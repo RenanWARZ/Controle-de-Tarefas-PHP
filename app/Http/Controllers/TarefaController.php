@@ -9,71 +9,91 @@ use App\Models\Usuario;
 use App\Services\NotificacaoServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class TarefaController extends Controller
 {
 
     //===================================================================================================================
-    public function index(Request $request, $usuarioId)
+    public function index(Request $request, $usuarioId = null)
     {
-        $usuario = Usuario::with('setor')->findOrFail($usuarioId);
+        // dd($usuarioId);
+        // dd($request->all());
+        try {
 
-        $tarefasQuery = $usuario->tarefas()->with('usuario.setor')->orderBy('prazo');
 
-        if ($request->filled('id')) {
-            $tarefasQuery->where('id', $request->id);
+            $usuario = '';
+            $tarefasQuery = Tarefa::query();
+            
+            if (!Auth::user()->tipo_user) {
+                $usuario = Usuario::with('user')->where('id_user', $usuarioId)->firstOrFail();
+            $tarefasQuery->where('usuario_id', $usuarioId);
         }
 
-        if ($request->filled('task')) {
-            $tarefasQuery->where('task', 'like', '%' . $request->task . '%');
+
+            $tarefasQuery = $tarefasQuery->orderby('usuario_id')->orderby('prazo');
+
+
+            if ($request->filled('id')) {
+                $tarefasQuery->where('id', $request->id);
+            }
+
+            if ($request->filled('task')) {
+                $tarefasQuery->where('task', 'like', '%' . $request->task . '%');
+            }
+
+            if ($request->filled('setor_id')) {
+                $setorId = $request->setor_id;
+                $tarefasQuery->whereHas('usuario', function ($query) use ($setorId) {
+                    $query->where('setor_id', $setorId);
+                });
+            }
+
+            //Buscar prazo pela data que está na banco de dados (whereBetween) e convertendo o formato
+            if ($request->filled('prazo') && $request->filled('prazofinal')) {
+                $dataInicio = date('Y-m-d', strtotime($request->prazo));
+                $dataFinal = date('Y-m-d', strtotime($request->prazofinal));
+                $tarefasQuery->whereBetween('prazo', [$dataInicio, $dataFinal]);
+            }
+
+            if ($request->filled('busca')) {
+                $total = $request->busca;
+                $tarefasQuery->where(function ($query) use ($total) {
+                    $query->where('task', 'like', "%{$total}%")
+                        ->orWhere('descricao', 'like', "%{$total}%");
+                });
+            }
+
+            $tarefas = $tarefasQuery->paginate(20)->withQueryString();
+
+
+            $tarefa = null;
+            if ($request->filled('id') || $request->filled('task') || $request->filled('busca') || $request->filled('setor_id')) {
+                $tarefa = $tarefas->first();
+            }
+
+            // dd($tarefa, $tarefas);
+
+            $setores = Setor::orderBy('nome')->get();
+            return view('tarefas.index', compact('usuario', 'tarefas', 'tarefa', 'setores'));
+            //code...
+        } catch (\Throwable $th) {
+            dd ($th);
         }
-
-        if ($request->filled('setor_id')) {
-            $setorId = $request->setor_id;
-            $tarefasQuery->whereHas('usuario', function ($query) use ($setorId) {
-                $query->where('setor_id', $setorId);
-            });
-        }
-
-        //Buscar prazo pela data que está na banco de dados (whereBetween) e convertendo o formato
-        if($request->filled('prazo') && $request->filled('prazofinal')){
-            $dataInicio = date('Y-m-d',strtotime($request->prazo));
-            $dataFinal = date('Y-m-d',strtotime($request->prazofinal));
-            $tarefasQuery->whereBetween('prazo',[$dataInicio, $dataFinal]);
-        }
-
-        if($request->filled('busca')){
-            $total = $request->busca;
-            $tarefasQuery->where(function ($query) use ($total){
-                $query->where('task','like',"%{$total}%")
-                ->orWhere('descricao','like',"%{$total}%");
-            });
-        }
-
-        $tarefas = $tarefasQuery->paginate(20)->withQueryString();
-
-        $tarefa = null;
-        if ($request->filled('id') || $request->filled('task') || $request->filled('busca') || $request->filled('setor_id')) {
-            $tarefa = $tarefas->first();
-        }
-
-        $setores = Setor::orderBy('nome')->get();
-
-        return view('tarefas.index', compact('usuario', 'tarefas', 'tarefa', 'setores'));
     }
 
     //===================================================================================================================
 
-    public function create(Usuario $usuario)
+    public function create()
     {
         $usuarios = Usuario::with('user')->get();
-        return view('tarefas.create', compact('usuario', 'usuarios'));
+        return view('tarefas.create', compact('usuarios'));
     }
     //===================================================================================================================
-    public function store(Request $request, Usuario $usuario)
+    public function store(Request $request)
     {
-
 
         $request->validate([
             'task' => 'required|string|max:255',
@@ -82,30 +102,38 @@ class TarefaController extends Controller
             'prazofinal' => 'required|date',
         ]);
 
-        $tarefa = Tarefa::create([
-            'task' => $request->task,
-            'descricao' => $request->descricao,
-            'prazo' => $request->prazo,
-            'prazofinal' => $request->prazofinal,
-            'usuario_id' => $usuario->id,
-        ]);
+        try {
+            $tarefa = Tarefa::create([
+                'task' => $request->task,
+                'descricao' => $request->descricao,
+                'prazo' => $request->prazo,
+                'prazofinal' => $request->prazofinal,
+                'usuario_id' => $request->usuario_id,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
 
 
-        $notificacao = new NotificacaoServices($usuario->id_user, 'Nova Tarefa Atribuída', 'Você recebeu uma nova tarefa: ' . $tarefa->task);
+        $notificacao = new NotificacaoServices($request->usuario_id, 'Nova Tarefa Atribuída', 'Você recebeu uma nova tarefa: ' . $tarefa->task);
 
         $notificacao->cadastrarNotificacao();
 
         // Envia o e-mail
         // Mail::to($usuario->email)->send(new TarefaCriada($tarefa));
 
-        return redirect()->route('tarefas.index', $usuario->id)->with('success', 'Tarefa atribuída e e-mail enviado!');
+        return redirect()->route('tarefas.index', Auth::user()->id)->with('success', 'Tarefa atribuída e e-mail enviado!');
     }
     //===================================================================================================================
 
-    public function destroy(Usuario $usuario, Tarefa $tarefa)
+    public function destroy(Tarefa $tarefa)
     {
 
-        $tarefa->delete();
+        if(Auth::user()->tipo_user){
+            $tarefa->delete();
+        }else{
+             return back()->with('errors', 'Você não tem permisssão para isso!');
+        }
 
         return back()->with('success', 'Tarefa deletada com sucesso!');
     }
@@ -134,7 +162,7 @@ class TarefaController extends Controller
         // Envia o e-mail
         // Mail::to($usuario->email)->send(new TarefaCriada($tarefa));
 
-        return redirect()->route('tarefas.index', $usuario->id)->with('success', 'Tarefa atualizada e email enviado com sucesso!');
+        return redirect()->route('tarefas.index', isset($usuario->id) ? $usuario->id : 0)->with('success', 'Tarefa atualizada e email enviado com sucesso!');
     }
     //===================================================================================================================
 

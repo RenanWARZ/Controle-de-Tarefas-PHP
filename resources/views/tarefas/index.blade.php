@@ -2,98 +2,83 @@
 
 @section('content')
 
-    <x-alertas />
-
     <div class="tarefas-header">
         <div class="card mt-4 mb-4 shadow-sm rounded-4 border-0">
             <div class="card-header bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
                 <h2 class="h4 mb-0">
-                    <i class="bi bi-list-check me-2"></i> Tarefas de {{ $usuario->user->name }}
+                    <i class="bi bi-list-check me-2"></i> Tarefas
                 </h2>
             </div>
 
-            <div class="card-body">
+            <div class="card-body bg-dark">
 
-                @if (Auth::user()->tipo_user)
-                <div class="text-end mb-4">
-                    <a href="{{ route('tarefas.create', ['usuario' => $usuario->id]) }}" class="btn btn-primary shadow-sm"
-                        aria-label="Criar nova tarefa para {{ $usuario->name }}">
-                        <i class="bi bi-plus-lg me-1"></i> Nova Tarefa </a>
+            <div class="card-body text-light">
+            <form action="{{ route('tarefas.index', ['usuario' => Auth::user()->id]) }}" method="GET" class="mb-4">
+
+                <div class="row justify-content-center g-3 align-items-end text-start">
+
+                    {{-- ID da tarefa --}}
+                    <div class="col-auto">
+                        <label for="id" class="form-label">ID:</label>
+                        <input type="number" name="id" class="form-control" placeholder="ID da tarefa"
+                            value="{{ request('id') }}">
                     </div>
-                    @endif
 
+                    {{-- Nome da tarefa --}}
+                    <div class="col-auto">
+                        <label for="name" class="form-label">Nome:</label>
+                        <input type="text" name="task" class="form-control" placeholder="Nome da tarefa"
+                            value="{{ request('task') }}">
+                    </div>
 
-            <div class="card-body mb-4">
-                <form action="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" method="GET" class="mb-4">
+                    {{-- Setor --}}
+                    <div class="col-auto">
+                        <label for="setor_id" class="form-label">Setor:</label>
+                        <select name="setor_id" class="form-select">
+                            <option value="">Todos os setores</option>
+                            @foreach ($setores as $setor)
+                                <option value="{{ $setor->id }}"
+                                    {{ request('setor_id') == $setor->id ? 'selected' : '' }}>
+                                    {{ $setor->nome }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <div class="row justify-content-center g-3 align-items-end text-start">
+                    {{-- Busca genérica --}}
+                    <div class="col-auto">
+                        <label for="busca" class="form-label">Pesquisar:</label>
+                        <input type="text" name="busca" class="form-control" placeholder="Buscar texto"
+                            value="{{ request('busca') }}">
+                    </div>
 
-                        {{-- ID da tarefa --}}
+                    <div class="row justify-content-center align-items-end g-3">
+                        {{-- Data Inicial --}}
                         <div class="col-auto">
-                            <label for="id" class="form-label">ID:</label>
-                            <input type="number" name="id" class="form-control" placeholder="ID da tarefa"
-                                value="{{ request('id') }}">
+                            <label for="prazo" class="form-label">Prazo Inicial:</label>
+                            <input type="date" name="prazo" id="prazo" class="form-control"
+                                value="{{ request('prazo') }}">
                         </div>
 
-                        {{-- Nome da tarefa --}}
+                        {{-- Data Final --}}
                         <div class="col-auto">
-                            <label for="name" class="form-label">Nome:</label>
-                            <input type="text" name="task" class="form-control" placeholder="Nome da tarefa"
-                                value="{{ request('task') }}">
-                        </div>
-
-                        {{-- Setor --}}
-                        <div class="col-auto">
-                            <label for="setor_id" class="form-label">Setor:</label>
-                            <select name="setor_id" class="form-select">
-                                <option value="">Todos os setores</option>
-                                @foreach ($setores as $setor)
-                                    <option value="{{ $setor->id }}"
-                                        {{ request('setor_id') == $setor->id ? 'selected' : '' }}>
-                                        {{ $setor->nome }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{-- Busca genérica --}}
-                        <div class="col-auto">
-                            <label for="busca" class="form-label">Pesquisar:</label>
-                            <input type="text" name="busca" class="form-control" placeholder="Buscar texto"
-                                value="{{ request('busca') }}">
-                        </div>
-
-                        <div class="row justify-content-center align-items-end g-3">
-                            {{-- Data Inicial --}}
-                            <div class="col-auto">
-                                <label for="prazo" class="form-label">Prazo Inicial:</label>
-                                <input type="date" name="prazo" id="prazo" class="form-control"
-                                    value="{{ request('prazo') }}">
-                            </div>
-
-                            {{-- Data Final --}}
-                            <div class="col-auto">
-                                <label for="prazofinal" class="form-label">Prazo Final:</label>
-                                <input type="date" name="prazofinal" id="prazofinal" class="form-control"
-                                    value="{{ request('prazofinal') }}">
-                            </div>
-                        </div>
-
-                        {{-- Botão Filtrar --}}
-                        <div class="row mt-4 mb-2">
-                            <div class="col text-center">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-search"></i> Filtrar
-                                </button>
-
-                            <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}" class="btn btn-primary">
-                            <i class="bi bi-arrow-clockwise"></i> Atualizar  </a>
-
-                            </div>
+                            <label for="prazofinal" class="form-label">Prazo Final:</label>
+                            <input type="date" name="prazofinal" id="prazofinal" class="form-control"
+                                value="{{ request('prazofinal') }}">
                         </div>
                     </div>
+
+
+                    {{-- Botão Filtrar --}}
+                    <div class="row mt-4 mb-2">
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Filtrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 </form>
-
                 <hr>
                 {{-- Resultado da busca --}}
                 @isset($tarefa)
@@ -139,7 +124,7 @@
                             <h5 class="card-title mb-1">
                                 <span class="badge bg-secondary me-2">#{{ $tarefa->id }}</span>
                                 <a style="text-decoration: none; color:black"
-                                    href="{{ route('tarefas.show', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}">{{ $tarefa->task }}</a>
+                                    href="{{ route('tarefas.show', ['usuario' => Auth::user()->id, 'tarefa' => $tarefa->id]) }}">{{ $tarefa->task }}</a>
 
                                 @if ($tarefa->concluida)
                                     <span class="badge bg-success ms-2">Concluída</span>
@@ -148,7 +133,8 @@
                                 @endif
                             </h5>
 
-                            <dt class="mb-2">👤 Atribuída a: {{ $tarefa->usuario->user->name ?? 'Usuário não encontrado' }} </dt>
+                            <dt class="mb-2">👤 Atribuída a:
+                                {{ $tarefa->usuario->user->name ?? 'Usuário não encontrado' }} </dt>
                             <p class="tarefa-descricao" title="{{ $tarefa->descricao }}">{{ $tarefa->descricao }}</p>
                             <small class="text-muted">
                                 <strong>Início:</strong> {{ \Carbon\Carbon::parse($tarefa->prazo)->format('d/m/Y') }} |
@@ -158,33 +144,30 @@
 
                         <div class="d-flex align-items-center gap-3 flex-column flex-sm-row">
                             @if (Auth::user()->tipo_user)
-
-                            <a href="{{ route('tarefas.edit', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
-                                class="btn btn-sm btn-outline-warning" title="Editar"
-                                aria-label="Editar tarefa #{{ $tarefa->id }}">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-
-                            <form method="POST"
-                            action="{{ route('tarefas.destroy', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
-                            onsubmit="return confirm('Deseja excluir essa tarefa?')" class="m-0">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"
-                            aria-label="Excluir tarefa #{{ $tarefa->id }}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </form>
-                    @endif
-
-                                <a href="{{ route('tarefas.show', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
-                                    class="btn btn-sm btn-outline-info" title="Exibir"
-                                    aria-label="Exibir detalhes da tarefa #{{ $tarefa->id }}">
-                                    <i class="bi bi-eye"></i>
+                                <a href="{{ route('tarefas.edit', ['usuario' => Auth::user()->id, 'tarefa' => $tarefa->id]) }}"
+                                    class="btn btn-sm btn-outline-warning" title="Editar"
+                                    aria-label="Editar tarefa #{{ $tarefa->id }}">
+                                    <i class="bi bi-pencil"></i>
                                 </a>
 
+                                <form method="POST" action="{{ route('tarefas.destroy', ['tarefa' => $tarefa->id]) }}"
+                                    onsubmit="return confirm('Deseja excluir essa tarefa?')" class="m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"
+                                        aria-label="Excluir tarefa #{{ $tarefa->id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            @endif
+
+                            <a href="{{ route('tarefas.show', ['tarefa' => $tarefa->id]) }}"
+                                class="btn btn-sm btn-outline-info" title="Exibir"
+                                aria-label="Exibir detalhes da tarefa #{{ $tarefa->id }}">
+                                <i class="bi bi-eye"></i>
+                            </a>
                             <form method="POST"
-                                action="{{ route('tarefas.update', ['usuario' => $usuario->id, 'tarefa' => $tarefa->id]) }}"
+                                action="{{ route('tarefas.update', ['usuario' => Auth::user()->id, 'tarefa' => $tarefa->id]) }}"
                                 class="m-0 d-flex align-items-center">
                                 @csrf
                                 @method('PATCH')
@@ -198,11 +181,12 @@
                             </form>
                         </div>
                     </div>
+                  <hr>
                 </div>
-            @empty
+                @empty
                 <p class="text-center text-muted fs-5 mt-5">Nenhuma tarefa atribuída ainda.</p>
-            @endforelse
+                @endforelse
+            </div>
         </div>
-    </div>
     </div>
 @endsection

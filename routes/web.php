@@ -19,15 +19,16 @@ use Illuminate\Support\Facades\Route;
         Route::put('/update/{usuario}', [UsuarioController::class, 'update'])->name('usuario.update');
         Route::delete('/destroy/{usuario}', [UsuarioController::class, 'destroy'])->name('usuario.destroy');
         Route::post('/usuario/notificacao', [UsuarioController::class, 'notificacao'])->name('usuario.notificacao');
-
+        Route::delete('/usuario/notificacao/destroy', [UsuarioController::class, 'excluirNotificacao'])->name('notificacao.destroy');
+       
         // ROTAS DE TAREFAS
         Route::get('/usuario/{usuario}/tarefas', [TarefaController::class, 'index'])->name('tarefas.index');
-        Route::get('/usuario/{usuario}/tarefas/create', [TarefaController::class, 'create'])->name('tarefas.create');
-        Route::post('/usuario/{usuario}/tarefas', [TarefaController::class, 'store'])->name('tarefas.store');
-        Route::get('/usuario/{usuario}/tarefas/{tarefa}/edit', [TarefaController::class, 'edit'])->name('tarefas.edit');
-        Route::get('/usuario/{usuario}/tarefas/{tarefa}', [TarefaController::class, 'show'])->name('tarefas.show');
-        Route::match(['put', 'patch'], '/usuario/{usuario}/tarefas/{tarefa}', [TarefaController::class, 'update'])->name('tarefas.update');
-        Route::delete('/usuario/{usuario}/tarefas/{tarefa}', [TarefaController::class, 'destroy'])->name('tarefas.destroy');
+        Route::get('/usuario/tarefas/create', [TarefaController::class, 'create'])->name('tarefas.create');
+        Route::post('/usuario/tarefas', [TarefaController::class, 'store'])->name('tarefas.store');
+        Route::get('/usuario/tarefas/{tarefa}/edit', [TarefaController::class, 'edit'])->name('tarefas.edit');
+        Route::get('/usuario/tarefas/{tarefa}', [TarefaController::class, 'show'])->name('tarefas.show');
+        Route::match(['put', 'patch'], '/usuario/tarefas/{tarefa}', [TarefaController::class, 'update'])->name('tarefas.update');
+        Route::delete('/destroy/tarefas/{tarefa}', [TarefaController::class, 'destroy'])->name('tarefas.destroy');
 
         // ROTA DE LOGOUT
     Route::post('/logout', [RegistrarController::class, 'destroy'])->name('logout');

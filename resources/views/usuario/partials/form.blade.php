@@ -3,13 +3,13 @@
 <div class="col-md-6">
     <label for="name" class="form-label">Nome:</label>
     <input type="text" name="name" id="name" class="form-control" placeholder="Digite o nome completo"
-        value="{{ old('name', $usuario->name ?? '') }}" required>
+        value="{{ old('name', $usuario->user->name ?? '') }}" required>
 </div>
 
 <div class="col-md-6">
     <label for="email" class="form-label">Email:</label>
     <input type="email" name="email" id="email" class="form-control" placeholder="Digite o email"
-        value="{{ old('email', $usuario->email ?? '') }}" required>
+        value="{{ old('email', $usuario->user->email ?? '') }}" required>
 </div>
 
 <div class="col-md-6">
@@ -33,6 +33,17 @@
                 {{ old('setor_id', $usuario->setor_id ?? '') == $setor->id ? 'selected' : '' }}>
                 {{ $setor->nome }}
             </option>
+        @endforeach
+    </select>
+</div>
+
+
+<div class="col-md-6">
+    <label for="papel" class="form-label">Papel</label>
+    <select name="papel" id="papel" class="form-select" required>
+        <option value="">Defina um papel</option>
+        @foreach ( $papeis as $papel )
+        <option value="{{$papel->id}}">{{$papel->descricao}}</option>
         @endforeach
     </select>
 </div>

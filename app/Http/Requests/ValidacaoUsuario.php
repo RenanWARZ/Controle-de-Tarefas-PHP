@@ -20,7 +20,7 @@ class ValidacaoUsuario extends FormRequest
      */
 
     //Função para validar o campos
-public function rules(): array
+    public function rules(): array
     {
         $usuarioId = $this->route('usuario')?->id ?? null;
 
@@ -33,6 +33,7 @@ public function rules(): array
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tarefas' => 'nullable|array',
             'tarefas.*' => 'exists:tarefas,id',
+            'papel' => 'required',
         ];
     }
 

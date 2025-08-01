@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    
+
     <div class="card mt-4 mb-4 border-light shadow rounded-4">
         <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white rounded-top-4">
             <h2 class="mb-0">Cadastrar Usuário</h2>
@@ -23,13 +23,11 @@
 
         <form action="{{ route('usuario.store') }}" method="POST" class="row g-4 p-4" enctype="multipart/form-data" novalidate>
             @csrf
-
             @include('usuario.partials.form')
 
             <div class="col-12 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary px-4 shadow-sm">
-                    <i class="bi bi-plus-lg me-2"></i> Cadastrar
-                </button>
+                    <i class="bi bi-plus-lg me-2"></i> Cadastrar  </button>
             </div>
         </form>
     </div>
