@@ -1,9 +1,10 @@
 @extends('components.layouts.app')
 
 @section('content')
-    <div class="card mt-4 mb-4 border-light shadow rounded-4 ">
-        <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white rounded-top-4">
-            <h2 class="mb-0">Editar Usuário</h2>
+<div class="container mt-5">
+    <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-header bg-gradient bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Editar Usuário</h4>
             <a href="{{ route('usuario.index') }}" class="btn btn-outline-light btn">
                 <i class="bi bi-arrow-left-circle me-1"></i> Voltar
             </a>

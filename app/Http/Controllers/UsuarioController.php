@@ -162,8 +162,11 @@ class UsuarioController extends Controller
     //==========================================================================================================================================================================
     public function destroy(Usuario $usuario)
     {
-        $this->destroyImg($usuario->user->foto); // Remove imagem, se existir
-        $usuario->delete();
+        if ($usuario->user && $usuario->foto) {
+        $this->destroyImg($usuario->foto); // Remove imagem, se existir
+    }
+
+        $usuario->user->delete();
 
         return redirect()->route('usuario.index')->with('success', 'Usuário apagado com sucesso!');
     }

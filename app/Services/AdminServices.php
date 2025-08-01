@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Usuario;
 
 class AdminServices
 {
@@ -22,12 +23,25 @@ class AdminServices
 
             // Cria ou atualiza o usuário no banco
 
-            User::updateOrCreate(
+            $dados = User::updateOrCreate(
                 ['email' => env('USER_EMAIL')],
                 [
                     'name' => env('USER_USERNAME'),
                     'password' => bcrypt(env('USER_PASSWORD')),
-                    'tipo_user' => 1 ] // Define como administrador
-            );
-        }   }
+                    'tipo_user' => 1
+                ] // Define como administrador
+            )->id;
+
+      
+
+            Usuario::updateOrCreate(
+            [ 'id_user' => $dados],
+            [
+                'id_user' => $dados,
+                'setor_id' => '2',
+            ]);
+
+
+        }
+    }
 }

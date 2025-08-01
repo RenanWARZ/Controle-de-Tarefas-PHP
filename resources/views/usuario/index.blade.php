@@ -2,8 +2,9 @@
 
 @section('content')
 
-    <div class="card mt-4 mb-4 border-light shadow-sm rounded-4">
-        <div class="card-header d-flex align-items-center justify-content-between bg-dark text-white rounded-top-4">
+<div class="container mt-5">
+    <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-header bg-gradient bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
             <h3 class="mb-0"><i class="bi bi-people-fill me-2"></i>Usuários</h3>
         </div>
 
@@ -36,8 +37,10 @@
                                     <td>{{ $usuario->user->name }}</td>
                                     <td>{{ $usuario->user->email }}</td>
                                     <td>{{ $usuario->user->tipo_user ? 'Administrador' : 'Usuário' }} </td>
-                                    <td>{{ \Carbon\Carbon::parse($usuario->created_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($usuario->created_at)->setTimezone('America/Sao_Paulo')->format('H:i:s') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($usuario->created_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y') }}
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($usuario->created_at)->setTimezone('America/Sao_Paulo')->format('H:i:s') }}
+                                    </td>
 
 
                                     @if (Auth::user()->tipo_user)
@@ -63,12 +66,6 @@
                                             </form>
                                     @endif
                                     </td>
-                                    {{-- <td>
-                                            <a href="{{ route('tarefas.index', ['usuario' => $usuario->id]) }}"
-                                                class="btn btn-outline-info btn-sm" title="Ver tarefas">
-                                                <i class="bi bi-list-task"></i>
-                                            </a>
-                                        </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

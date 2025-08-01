@@ -2,15 +2,14 @@
 
 @section('content')
 
-    <div class="tarefas-header">
-        <div class="card mt-4 mb-4 shadow-sm rounded-4 border-0">
-            <div class="card-header bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
-                <h2 class="h4 mb-0">
-                    <i class="bi bi-list-check me-2"></i> Tarefas
-                </h2>
+<div class="container mt-5">
+    <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-header bg-gradient bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">
+                    <i class="bi bi-list-check me-2"></i> Filtrar Tarefas </h2>
             </div>
 
-            <div class="card-body bg-dark">
+            <div class="card-body">
 
             <div class="card-body text-light">
             <form action="{{ route('tarefas.index', ['usuario' => Auth::user()->id]) }}" method="GET" class="mb-4">
@@ -35,7 +34,7 @@
                     <div class="col-auto">
                         <label for="setor_id" class="form-label">Setor:</label>
                         <select name="setor_id" class="form-select">
-                            <option value="">Todos os setores</option>
+                            <option value="">Setores</option>
                             @foreach ($setores as $setor)
                                 <option value="{{ $setor->id }}"
                                     {{ request('setor_id') == $setor->id ? 'selected' : '' }}>

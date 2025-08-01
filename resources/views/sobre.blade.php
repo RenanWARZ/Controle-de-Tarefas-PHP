@@ -28,14 +28,14 @@
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
-
     </style>
 
     <section class="bg-gradient-dark py-5 ">
         <div class="container">
             <div class="text-center mb-5">
                 <h1 class="section-title">Sobre o <span class="highlight">Gerenciador de Tarefas</span></h1>
-                <p class="lead">Uma solução intuitiva para gestão eficiente de atividades e equipes em diferentes setores.</p>
+                <p class="lead">Uma solução intuitiva para gestão eficiente de atividades e equipes em diferentes setores.
+                </p>
             </div>
 
             <div class="row g-4">

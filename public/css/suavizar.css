@@ -1,0 +1,20 @@
+.dropdown-menu {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Suavizar a abertura do offcanvas */
+.offcanvas {
+    transition: transform 0.5s ease-in-out; /* padrão é 0.3s */
+}
+
