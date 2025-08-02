@@ -26,7 +26,8 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral"
                 aria-controls="menuLateral" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-                <a class="ms-2 navbar-brand"> Gerenciador de Tarefas </a></button>
+                <a class="ms-2 navbar-brand"> Gerenciador de Tarefas </a>
+            </button>
 
             <!-- Direita da navbar -->
             <div class="d-flex align-items-center ms-auto gap-3">
@@ -69,14 +70,6 @@
 
             </div>
         </div>
-
-        @if ($qtdeNotificacoes)
-            <!-- Badge com número de notificações -->
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ $qtdeNotificacoes ?? 0 }}
-                <span class="visually-hidden">notificações não lidas</span>
-            </span>
-        @endif
         </button>
 
         <!-- MENU LATERAL -->
@@ -84,7 +77,8 @@
             aria-labelledby="menuLateralLabel">
             <div class="offcanvas-header bg-dark">
                 <h5 class="offcanvas-title fw-bold text-white " id="menuLateralLabel">
-                    <i class="bi bi-list me-2"></i> Menu Principal </h5>
+                    <i class="bi bi-list me-2"></i> Menu Principal
+                </h5>
 
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                     aria-label="Fechar"></button>

@@ -26,7 +26,7 @@ class TarefaController extends Controller
 
             $usuario = '';
             $tarefasQuery = Tarefa::query();
-            
+
             if (!Auth::user()->tipo_user) {
                 $usuario = Usuario::with('user')->where('id_user', $usuarioId)->firstOrFail();
             $tarefasQuery->where('usuario_id', $usuarioId);
@@ -138,7 +138,6 @@ class TarefaController extends Controller
         return back()->with('success', 'Tarefa deletada com sucesso!');
     }
     //===================================================================================================================
-
     public function update(Request $request, Usuario $usuario, Tarefa $tarefa)
     {
 

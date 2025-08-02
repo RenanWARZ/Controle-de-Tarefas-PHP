@@ -5,7 +5,7 @@
     <div class="card border-0 shadow-lg rounded-4">
         <div class="card-header bg-gradient bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
             <h4 class="mb-0">
-                <i class="bi bi-pencil-square me-2"></i> Editar Tarefa de {{ $usuario->name }}
+                <i class="bi bi-pencil-square me-2"></i> Editar Tarefa de {{ $usuario }}
             </h4>
             <a href="{{ route('tarefas.index', ['usuario' => $usuario->id ?? 0]) }}" class="btn btn-sm btn-outline-light">
                 <i class="bi bi-arrow-left me-1"></i> Voltar
@@ -18,7 +18,7 @@
             <form action="{{ route('tarefas.update', ['tarefa' => $tarefa->id]) }}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 @method('PATCH')
-                
+
                 <div class="mb-4">
                     <label for="task" class="form-label fw-semibold">📝 Nome da Tarefa</label>
                     <input
@@ -55,8 +55,7 @@
                             id="prazo"
                             name="prazo"
                             value="{{ old('prazo', $tarefa->prazo) }}"
-                            required
-                        >
+                            required>
                         <div class="invalid-feedback">
                             Por favor, escolha a data inicial.
                         </div>

@@ -34,6 +34,8 @@ class ValidacaoUsuario extends FormRequest
             'tarefas' => 'nullable|array',
             'tarefas.*' => 'exists:tarefas,id',
             'papel' => 'required',
+            'setor_id' => 'required|exists:setors,id',
+
         ];
     }
 

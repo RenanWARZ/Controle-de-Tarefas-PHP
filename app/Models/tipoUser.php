@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class tipoUser extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory <\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -17,6 +17,7 @@ class tipoUser extends Authenticatable
      *
      * @var list<string>
      */
+    
     protected $table = 'tipo_user';
     protected $fillable = [
         'id',
@@ -28,6 +29,7 @@ class tipoUser extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $hidden = [
         'password',
         'remember_token',

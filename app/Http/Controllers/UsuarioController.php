@@ -112,7 +112,6 @@ class UsuarioController extends Controller
         /** @var \Illuminate\Http\Request $request */
 
         try {
-
             $dados = $request->validated();
 
             // Se enviou uma nova senha, criptografa
@@ -142,8 +141,12 @@ class UsuarioController extends Controller
                 'email' => $dados['email'],
                 'password' => $dados['password'] ?? $usuario->user->password, // Mantém a senha antiga se não for atualizada
                 'tipo_user' => $dados['papel'],
-
             ]);
+
+            // dd($dados);
+            // Setor::whereId($usuario->setor_id)->update([
+            //     'setor_id' => $dados['nome'],
+            // ]);
 
             if (isset($dados['foto'])) {
                 Usuario::where('id_user', $usuario->id_user)->update([
@@ -151,9 +154,12 @@ class UsuarioController extends Controller
                 ]);
             }
 
+            Usuario::where('id_user', $usuario->id_user)->update([
+                'setor_id' => $dados['setor_id'],
+            ]);
+
 
             return redirect()->route('usuario.index')->with('success', 'Usuário editado com sucesso!');
-            //code...
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -163,8 +169,8 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         if ($usuario->user && $usuario->foto) {
-        $this->destroyImg($usuario->foto); // Remove imagem, se existir
-    }
+            $this->destroyImg($usuario->foto); // Remove imagem, se existir
+        }
 
         $usuario->user->delete();
 

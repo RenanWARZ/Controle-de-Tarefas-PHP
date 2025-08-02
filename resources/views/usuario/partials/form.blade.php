@@ -15,11 +15,15 @@
 <div class="col-md-3">
     <label for="papel" class="form-label">Papel</label>
     <select name="papel" id="papel" class="form-select">
-        @foreach ( $papeis as $papel )
-        <option value="{{$papel->id}}">{{$papel->descricao}}</option>
+        @foreach ($papeis as $papel)
+            <option value="{{ $papel->id }}"
+                {{ (old('papel') == $papel->id || (isset($usuario) && $usuario->user->tipo_user == $papel->id)) ? 'selected' : '' }}>
+                {{ $papel->descricao }}
+            </option>
         @endforeach
     </select>
 </div>
+
 
 <div class="col-md-4">
     <label for="password" class="form-label">Senha:</label>
