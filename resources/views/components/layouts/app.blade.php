@@ -34,7 +34,7 @@
 
                 <!-- Botão de notificação -->
                 <button type="button" class="btn btn-dark position-relative" data-bs-toggle="modal"
-                    data-bs-target="#ExemploModalCentralizado">
+                    data-bs-target="#ExemploModalCentralizado" style="display: contents;">
                     <i class="bi bi-bell-fill fs-5"></i>
                     @if ($qtdeNotificacoes)
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -48,8 +48,17 @@
                 <li class="nav-item dropdown list-unstyled m-0">
                     <a class="nav-link text-white fs-5 dropdown-toggle d-flex align-items-center" href="#"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle me-2 fs-4"></i>
-                        {{ Auth::user()->name }}
+                        @if (Auth::user()->usuario &&
+                                Auth::user()->usuario->foto &&
+                                file_exists(public_path('storage/' . Auth::user()->usuario->foto)))
+                            <img src="{{ asset('storage/' . Auth::user()->usuario->foto) }}" alt="Foto do usuário"
+                                class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
+                        @else
+                            <img src="{{ asset('storage/usuarios/default.jpg') }}" alt="Foto padrão"
+                                class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
+                        @endif
+                        <span>{{ Auth::user()->name }}</span>
+
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                         <li><a class="dropdown-item" href="{{ route('usuario.show', Auth::user()->id) }}">Perfil</a>
@@ -67,8 +76,8 @@
                         </li>
                     </ul>
                 </li>
-
             </div>
+
         </div>
         </button>
 
@@ -125,9 +134,10 @@
                                 <li><a class="dropdown-item" href="{{ route('tarefas.create') }} ">Nova tarefa</a>
                                 </li>
                                 <li><a class="dropdown-item"
-                                        href="{{ route('tarefas.index', Auth::user()->id) }}">Pesquisar</a></li>
+                                        href="{{ route('tarefas.index', Auth::user()->id) }}">Buscar</a></li>
                             @else
-                                <li><a class="dropdown-item" href="{{ route('tarefas.index', Auth::user()->id) }}">Ver
+                                <li><a class="dropdown-item"
+                                        href="{{ route('tarefas.index', Auth::user()->id) }}">Ver
                                         suas tarefas</a>
                                 </li>
                             @endif
@@ -141,7 +151,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link text-white fs-5 d-flex align-items-center" href="{{ route('sobre') }}">
-                        <i class="bi bi-info-circle-fill me-2"></i> Sobre </a>
+                        <i class="bi bi-info-circle me-2"></i> Sobre </a>
                 </li>
             </div>
 
@@ -173,10 +183,7 @@
             </div>
     </nav>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <div class="container mt-4 pt-5">
-
-
         @yield('content')
 
         <x-modal-notificacoes :id="Auth::user()->id" />
@@ -184,8 +191,6 @@
         @stack('scripts')
     </div>
 
-
-    <!-- Rodapé opcional -->
     <footer class="text-white-50 text-center py-3 mt-5 small">
         Desenvolvido por Renan Pilan • {{ now()->year }}
     </footer>

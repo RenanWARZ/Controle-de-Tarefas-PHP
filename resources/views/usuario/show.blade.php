@@ -32,8 +32,8 @@
                                 style="width: 180px; height: 180px; object-fit: cover;">
                         @else
                             <img src="{{ asset('storage/usuarios/default.jpg') }}" alt="Imagem padrão"
-                                class="img-thumbnail rounded-circle shadow-sm"
-                                style="width: 180px; height: 180px; object-fit: cover;">
+                                class="img-thumbnail rounded-circle"
+                                style="width: 180px; height: 180px; object-fit: cover; filter: drop-shadow(8px 10px 5px rgba(0, 0, 0, 0.8));">
                         @endif
                     </div>
 

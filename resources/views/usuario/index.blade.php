@@ -19,7 +19,7 @@
                         <table class="table table-hover align-middle text-center mb-0">
                             <thead class="table-secondary text-uppercase">
                                 <tr>
-                                    <th>ID</th>
+                                    <th>ID </th> 
                                     <th>Nome</th>
                                     <th>Email</th>
                                     <th>Papel</th>
@@ -37,13 +37,15 @@
                                         <th scope="row">{{ $usuario->id }}</th>
                                         <td>{{ $usuario->user->name }}</td>
                                         <td>{{ $usuario->user->email }}</td>
-                                        <td>{{ $usuario->user->tipo_user ? 'Administrador' : 'Usuário' }} </td>
+
+                                        <td><span class="badge bg-{{ $usuario->user->tipo_user ? 'primary' : 'secondary' }}">
+                                        {{ $usuario->user->tipo_user ? 'Administrador' : 'Usuário' }}
+                                        </span></td>
+
                                         <td>{{ $usuario->setor->nome }} </td>
+
                                         <td>{{ \Carbon\Carbon::parse($usuario->created_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y') }}
                                         </td>
-                                        {{-- <td>{{ \Carbon\Carbon::parse($usuario->created_at)->setTimezone('America/Sao_Paulo')->format('H:i:s') </td> --}}
-
-
 
                                         @if (Auth::user()->tipo_user)
                                             <td class="d-flex justify-content-center gap-2">

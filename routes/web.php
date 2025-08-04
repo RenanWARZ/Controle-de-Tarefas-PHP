@@ -5,10 +5,10 @@ use App\Http\Controllers\RegistrarController;
 use App\Http\Controllers\TarefaController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
+//=====================================================================================================================================
 
     // ROTAS DE USUÁRIOS
-
-    Route::middleware(['auth'])->group(function () {
+        Route::middleware(['auth'])->group(function () {
         Route::get('/', [UsuarioController::class, 'welcome'])->name('welcome');
 
         Route::get('/usuario', [UsuarioController::class, 'index'])->name('usuario.index');
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
         Route::delete('/destroy/{usuario}', [UsuarioController::class, 'destroy'])->name('usuario.destroy');
         Route::post('/usuario/notificacao', [UsuarioController::class, 'notificacao'])->name('usuario.notificacao');
         Route::delete('/usuario/notificacao/destroy', [UsuarioController::class, 'excluirNotificacao'])->name('notificacao.destroy');
-       
+
         // ROTAS DE TAREFAS
         Route::get('/usuario/{usuario}/tarefas', [TarefaController::class, 'index'])->name('tarefas.index');
         Route::get('/usuario/tarefas/create', [TarefaController::class, 'create'])->name('tarefas.create');
@@ -31,18 +31,19 @@ use Illuminate\Support\Facades\Route;
         Route::delete('/destroy/tarefas/{tarefa}', [TarefaController::class, 'destroy'])->name('tarefas.destroy');
 
         // ROTA DE LOGOUT
-    Route::post('/logout', [RegistrarController::class, 'destroy'])->name('logout');
+        Route::post('/logout', [RegistrarController::class, 'destroy'])->name('logout');
     });
 //=====================================================================================================================================
 
-// ROTAS DE LOGIN
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->name('entrar');
+        // ROTAS DE LOGIN
+        Route::get('/login', [LoginController::class, 'index'])->name('login');
+        Route::post('/login', [LoginController::class, 'store'])->name('entrar');
 
-// ROTAS DE REGISTRO
-Route::get('/registrar', [RegistrarController::class, 'create'])->name('registrar.create');
-Route::post('/registrar', [RegistrarController::class, 'store'])->name('registrar.store');
+        // ROTAS DE REGISTRO
+        Route::get('/registrar', [RegistrarController::class, 'create'])->name('registrar.create');
+        Route::post('/registrar', [RegistrarController::class, 'store'])->name('registrar.store');
 
 //=====================================================================================================================================
-// ROTAS SOBRE
-Route::get('/sobre', [UsuarioController::class, 'sobre'])->name('sobre');
+        // ROTAS SOBRE 
+        Route::get('/sobre', [UsuarioController::class, 'sobre'])->name('sobre');
+        Route::get('/sobres', [UsuarioController::class, 'sobres'])->name('sobres');

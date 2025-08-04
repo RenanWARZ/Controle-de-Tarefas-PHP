@@ -18,7 +18,7 @@
                     <div class="mb-3 p-3 border-start border-4 border-info rounded bg-white shadow-sm">
                         <div class="d-flex justify-content-between">
                             <strong class="text-primary">
-                                <i></i>📌 {{ $notificacao['titulo'] }}
+                                <i></i> 📌 {{ $notificacao['titulo'] }}
                             </strong>
                             <small
                                 class="text-muted">{{ \Carbon\Carbon::parse($notificacao['created_at'])->format('d/m/Y') }}</small>

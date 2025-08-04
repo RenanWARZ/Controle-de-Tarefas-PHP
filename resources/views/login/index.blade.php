@@ -62,7 +62,7 @@
         }
 
         .btn-primary {
-            background-color: #0d6efd;
+            background-color: #1e90ff;
             border: none;
             border-radius: 0.5rem;
             padding: 0.65rem;
@@ -71,8 +71,8 @@
         }
 
         .btn-primary:hover {
-            background-color: #0b5ed7;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+            background-color: #044888;
+            box-shadow: 0 4px 12px rgba(3, 87, 167, 0.4);
         }
 
         .alert {
@@ -84,7 +84,7 @@
         }
 
         .input-group-text {
-            background-color: #0d6efd;
+            background-color: #1e90ff;
             color: #fff;
             border: none;
             border-radius: 0.5rem 0 0 0.5rem;
@@ -97,12 +97,30 @@
         .input-group {
             margin-bottom: 1.2rem;
         }
+
+        .icon-hover i {
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .icon-hover:hover i {
+            color: #ccce71;
+            /* Azul Bootstrap */
+            transform: scale(1.2);
+            text-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+        }
     </style>
 </head>
 
 <body>
     <form method="POST" action="{{ route('entrar') }}" class="login-container">
         @csrf
+        <div class="d-flex justify-content-end">
+            <a class="nav-link text-white fs-5 icon-hover" href="{{ route('sobres') }}">
+                <i class="bi bi-exclamation-circle" style="font-size: 26px"></i>
+            </a>
+
+        </div>
 
         <h2><i class="bi bi-box-arrow-in-right me-2"></i>Login</h2>
 
@@ -120,7 +138,8 @@
         <label for="email" class="form-label">E-mail</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-            <input type="email" name="email" id="email" class="form-control" required value="{{ old('email') }}" autofocus>
+            <input type="email" name="email" id="email" class="form-control" required
+                value="{{ old('email') }}" autofocus>
         </div>
 
         <label for="password" class="form-label">Senha</label>
@@ -133,11 +152,13 @@
             <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
         </button>
 
-        {{-- Registrar opcional
-        <a href="{{ route('registrar.create') }}" class="btn btn-outline-light w-100 mt-2">
+        {{-- <a href="{{ route('registrar.create') }}" class="btn btn-outline-light w-100 mt-2">
             <i class="bi bi-person-plus me-1"></i> Registrar-se
-        </a>
-        --}}
+        </a> --}}
+
+        <footer class="text-white-50 text-center py-3 mt-2 small">
+            Desenvolvido por Renan Pilan • {{ now()->year }}
+        </footer>
     </form>
 </body>
 

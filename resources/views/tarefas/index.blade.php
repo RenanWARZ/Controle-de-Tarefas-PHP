@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-3 mt-3">
+                    <div class="row g-3 mt-3 d-flex justify-content-center">
                         {{-- Prazo inicial --}}
                         <div class="col-md-3">
                             <label for="prazo" class="form-label">Prazo Inicial:</label>
@@ -65,8 +65,8 @@
                                 value="{{ request('prazofinal') }}">
                         </div>
 
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">
+                        <div class="d-flex align-items-end size-100 justify-content-center">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-search"></i> Filtrar
                             </button>
                         </div>

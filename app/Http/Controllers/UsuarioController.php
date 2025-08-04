@@ -25,6 +25,11 @@ class UsuarioController extends Controller
     {
         return view('sobre');
     }
+     //==========================================================================================================================================================================
+    public function sobres()
+    {
+        return view('sobres');
+    }
     //==========================================================================================================================================================================
     public function index(Tarefa $tarefa)
     {
@@ -103,6 +108,12 @@ class UsuarioController extends Controller
         $tarefas = Tarefa::all();
         $papeis = tipoUser::all();
 
+        // Retorna a view usuario.edit (geralmente um Blade).
+        // Passa para a view os dados:
+        // $usuario: o usuário que será editado.
+        // $setores: lista de setores disponíveis.
+        // $tarefas: lista de tarefas.
+        // $papeis: lista de tipos de usuário (ex: Admin, Usuário).
         return view('usuario.edit', compact('usuario', 'setores', 'tarefas', 'papeis'));
     }
     //==========================================================================================================================================================================

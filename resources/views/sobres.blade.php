@@ -1,9 +1,90 @@
-@extends('components.layouts.app')
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o Sistema</title>
 
-@section('title', 'Sobre o Projeto')
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-@section('content')
     <style>
+        body {
+            background-image: url('https://4kwallpapers.com/images/wallpapers/macos-monterey-stock-black-dark-mode-layers-5k-3840x2160-5889.jpg');
+            color: #e6edf3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #58a6ff, #1f6feb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lead {
+            font-size: 1.15rem;
+            color: #c9d1d9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .icon-card {
+            background-color: #0707078a;
+            border-radius: 20px;
+            padding: 30px 20px;
+            height: 100%;
+            box-shadow: 0 0 15px rgba(31, 111, 235, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .icon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(31, 111, 235, 0.2);
+        }
+
+        .icon-card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #58a6ff;
+        }
+
+        .btn-cta {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background-color: #388bfd;
+            transform: scale(1.05);
+        }
+
+        .highlight {
+            color: #58a6ff;
+        }
+
+        @media (max-width: 767px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .icon-card {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+ <style>
         .bg-gradient-dark {
             color: white;
         }
@@ -87,4 +168,5 @@
             </div>
         </div>
     </section>
-@endsection
+</body>
+</html>
